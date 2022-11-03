@@ -24,7 +24,7 @@ router.post("/create", async (req, res, next) => {
             collaborators: collaborators,
             taskCompleted: taskCompleted
         })
-        res.redirect("/");
+        res.redirect("/tasks");
     }
     catch(error) {
         res.render('create-task', {errorMessage: error})
