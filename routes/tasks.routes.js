@@ -3,6 +3,7 @@ const router = express.Router();
 
 /* GET Dashboard page */
 router.get("/dashboard", (req, res, next) => {
+    ///get task name
     res.render("dashboard");
 });
 
@@ -10,6 +11,11 @@ router.get("/dashboard", (req, res, next) => {
 router.get("/", (req, res, next) => {
     res.render("tasks");
   });
+
+/* GET Create Task page */
+router.get("/create", (req, res, next) => {
+    res.render("create-task");
+});
 
 /* GET Create Task page */
 router.get("/create", (req, res, next) => {
