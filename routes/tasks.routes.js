@@ -17,12 +17,10 @@ router.get("/create", (req, res, next) => {
 /* POST Create Task page */
 router.post("/create", async (req, res, next) => {
     try {
-        const {taskName, dueDate, collaborators, taskCompleted } = req.body
+        const {taskName, dueDate} = req.body
         await TaskModel.create({
             taskName: taskName,
             dueDate: dueDate, 
-            collaborators: collaborators,
-            taskCompleted: taskCompleted
         })
         res.redirect("/tasks");
     }
