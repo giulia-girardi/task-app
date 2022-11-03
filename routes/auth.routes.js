@@ -13,22 +13,25 @@ router.get('/signup', (req, res) => {
 //Post sign up data
 router.post('/signup', async (req, res) => {
     try {
-        const { firstname, lastname, email, password } = req.body;
+        const { firstName, lastName, email, password } = req.body;
         const salt = bcrypt.genSaltSync(10)
         const hashedPassword = bcrypt.hashSync(password, salt)
 
         await User.create({
-            firstname: firstname,
-            lastname: lastname,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: hashedPassword,
         })
         res.redirect('/profile')
     } catch (error) {
-        res.render('/signup', { errorMessage: error.message })
+        res.render('authorization/signup', { errorMessage: error.message })
     }
 })
 
+router.get('/profile', (req, res) => {
+    res.render('profile')
+})
 
 // Get Login page
 router.get('/login', (req, res) => {
