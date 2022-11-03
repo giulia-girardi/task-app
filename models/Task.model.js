@@ -8,10 +8,6 @@ const TaskSchema = new Schema(
       trim: true,
       required: true,
     },
-    createDate: {
-        type: Date,
-        required: true,
-      },
     dueDate: {
       type: Date,
       required: true,
