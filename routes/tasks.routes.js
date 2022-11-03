@@ -2,11 +2,7 @@ const express = require('express');
 const TaskModel = require('../models/Task.model');
 const router = express.Router();
 
-/* GET Dashboard page */
-router.get("/dashboard", (req, res, next) => {
-    ///get task name
-    res.render("dashboard");
-});
+
 
 /* GET Tasks page */
 router.get("/", (req, res, next) => {
@@ -37,7 +33,6 @@ router.post("/create", async (req, res, next) => {
 
 /* GET Edit Task page */
 router.get("/:id", (req, res, next) => {
-    //const oneMovie = await MoviesModel.findById(req.params.id).populate('cast')
     const oneTask = TaskModel.findById(req.params.id)
     res.render("edit-task", {oneTask});
 });
