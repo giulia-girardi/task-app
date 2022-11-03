@@ -15,6 +15,7 @@ const TaskSchema = new Schema(
     collaborators: [{type: Schema.Types.ObjectId, ref: 'User'}],
     taskCompleted: {
         type: Boolean,
+        default: false,
       }
   },
   {
