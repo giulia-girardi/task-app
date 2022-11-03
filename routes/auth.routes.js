@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
             email: email,
             password: hashedPassword,
         })
-        res.redirect('/profile')
+        res.redirect('/dashboard')
     } catch (error) {
         res.render('authorization/signup', { errorMessage: error.message })
     }
@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         if (bcrypt.compareSync(password, currentUser.password)) {
             console.log('Session: ', req.session)
             req.session.user = currentUser
-            res.redirect('/profile')
+            res.redirect('/dashboard')
         } else {
             res.render('authorization/login', { errorMessage: 'Password is not correct!' })
         }
