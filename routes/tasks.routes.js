@@ -30,9 +30,24 @@ router.post("/create", async (req, res, next) => {
 });
 
 /* GET Edit Task page */
-router.get("/:id", (req, res, next) => {
+router.get("/:id/edit", (req, res, next) => {
     const oneTask = TaskModel.findById(req.params.id)
     res.render("edit-task", {oneTask});
+});
+
+/* POST Edit Task page */
+router.post("/:id/edit", async (req, res, next) => {
+    try {
+        await TaskModel.findByIdAndUpdate(req.params.id, {
+            taskName: req.params.taskName,
+            dueDate: req.params.dueDate, 
+        })
+        console.log(req.params)
+        res.redirect("/tasks");
+    }
+    catch(error) {
+        res.render('tasks', {errorMessage: error})
+    }
 });
 
 
