@@ -5,8 +5,9 @@ const router = express.Router();
 
 
 /* GET Tasks page */
-router.get("/", (req, res, next) => {
-    res.render("tasks");
+router.get("/", async (req, res, next) => {
+    const allTasks = await TaskModel.find( )
+    res.render("tasks", {allTasks});
   });
 
 /* GET Create Task page */
@@ -30,8 +31,8 @@ router.post("/create", async (req, res, next) => {
 });
 
 /* GET Edit Task page */
-router.get("/:id/edit", (req, res, next) => {
-    const oneTask = TaskModel.findById(req.params.id)
+router.get("/:id/edit", async (req, res, next) => {
+    const oneTask = await TaskModel.findById(req.params.id)
     res.render("edit-task", {oneTask});
 });
 
