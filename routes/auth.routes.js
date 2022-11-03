@@ -29,13 +29,28 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-router.get('/profile', (req, res) => {
-    res.render('profile')
-})
 
 // Get Login page
 router.get('/login', (req, res) => {
     res.render('authorization/login')
+})
+
+// Post Login data
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const currentUser = await User.findOne( { email } )
+    console.log('Current User: ', currentUser);
+    if (!currentUser) {
+        res.render('authorization/login', { errorMessage: 'Username does not exist!' })
+    } else {
+        if (bcrypt.compareSync(password, currentUser.password)) {
+            console.log('Session: ', req.session)
+            req.session.user = currentUser
+            res.redirect('/profile')
+        } else {
+            res.render('authorization/login', { errorMessage: 'Password is not correct!' })
+        }
+    }
 })
 
 module.exports = router;
