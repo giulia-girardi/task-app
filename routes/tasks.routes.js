@@ -36,8 +36,10 @@ router.post("/create", async (req, res, next) => {
 });
 
 /* GET Edit Task page */
-router.get("/edit", (req, res, next) => {
-    res.render("edit-task");
+router.get("/:id", (req, res, next) => {
+    //const oneMovie = await MoviesModel.findById(req.params.id).populate('cast')
+    const oneTask = TaskModel.findById(req.params.id)
+    res.render("edit-task", {oneTask});
 });
 
 
