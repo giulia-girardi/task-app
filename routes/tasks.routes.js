@@ -1,22 +1,22 @@
 const express = require('express');
 const TaskModel = require('../models/Task.model');
 const router = express.Router();
-
+const {isLoggedIn} = require('../middleware/route-guard')
 
 
 /* GET Tasks page */
-router.get("/", async (req, res, next) => {
+router.get("/", isLoggedIn, async (req, res, next) => {
     const allTasks = await TaskModel.find( )
     res.render("tasks", {allTasks});
   });
 
 /* GET Create Task page */
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
     res.render("create-task");
 });
 
 /* POST Create Task page */
-router.post("/create", async (req, res, next) => {
+router.post("/create", isLoggedIn, async (req, res, next) => {
     try {
         const {taskName, dueDate} = req.body
         await TaskModel.create({
@@ -31,13 +31,13 @@ router.post("/create", async (req, res, next) => {
 });
 
 /* GET Edit Task page */
-router.get("/:id/edit", async (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
     const oneTask = await TaskModel.findById(req.params.id)
     res.render("edit-task", {oneTask});
 });
 
 /* POST Edit Task page */
-router.post("/:id/edit", async (req, res, next) => {
+router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
         await TaskModel.findByIdAndUpdate(req.params.id, {
             taskName: req.body.taskName,
@@ -52,7 +52,7 @@ router.post("/:id/edit", async (req, res, next) => {
 });
 
 /* POST Delete Task */
-router.post("/:id/delete", async (req, res, next) => {
+router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
     try {
         await TaskModel.findByIdAndDelete(req.params.id)
         res.redirect("/tasks");
