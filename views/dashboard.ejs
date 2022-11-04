@@ -1,3 +1,7 @@
 <h1>Dashboard</h1>
+<p>Tasks due today:</p>
+<% tasksDueToday.forEach(task => { %>
+ <p><%= task.taskName %> </p>
+<% }) %>
 <a href="/tasks">View all tasks</a>
 <a href="/tasks/create">Create a task</a>
