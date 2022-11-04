@@ -19,23 +19,27 @@ router.post('/signup', async (req, res) => {
         //Making sure that all fields are filled:
         if (!firstName || !lastName || !email || !password) {
             res.render('authorization/signup', {errorMessage: 'All fields are mandatory. Please provide your first Name, last Name, email and password. '});
-        } 
-
-        //Making sure that correct form of password is used:
-        if (password.length < 10) {
+            return;
+        } else if (password.length < 10) {
             res.render('authorization/signup', {errorMessage: 'The password needs to have at least 10 characters.'});
+            return;
+        } else {
+            const salt = bcrypt.genSaltSync(10)
+            const hashedPassword = bcrypt.hashSync(password, salt)
+    
+            await User.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: hashedPassword,
+            })
+            const currentUser = await User.findOne( { email } )
+            req.session.user = currentUser
+            console.log('SESSION =====> ', req.session);
+            console.log('req.session.user =====> ', req.session.user)
+
+            res.redirect('/dashboard')
         }
-
-        const salt = bcrypt.genSaltSync(10)
-        const hashedPassword = bcrypt.hashSync(password, salt)
-
-        await User.create({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: hashedPassword,
-        })
-        res.redirect('/dashboard')
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(500).render('authorization/signup', { errorMessage: error.message });
