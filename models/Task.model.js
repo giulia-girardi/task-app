@@ -12,11 +12,12 @@ const TaskSchema = new Schema(
       type: Date,
       required: true,
     },
-    collaborators: {type: Schema.Types.ObjectId, ref: 'User'},
+    collaborators: [{type: Schema.Types.ObjectId, ref: 'User'}],
     taskCompleted: {
         type: Boolean,
         default: false,
-      }
+    },
+    taskOwner: [{type: Schema.Types.ObjectId, ref: 'User'}]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

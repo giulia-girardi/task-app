@@ -2,7 +2,7 @@ const express = require('express');
 const TaskModel = require('../models/Task.model');
 const router = express.Router();
 const {isLoggedIn} = require('../middleware/route-guard')
-
+const User = require('../models/User.model')
 
 /* GET Tasks page */
 router.get("/", isLoggedIn, async (req, res, next) => {
@@ -19,11 +19,23 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 router.post("/create", isLoggedIn, async (req, res, next) => {
     try {
         const {taskName, dueDate} = req.body
-        await TaskModel.create({
+        //const currentUser = await User.findOne({email})
+        const createdTask = await TaskModel.create({
             taskName: taskName,
             dueDate: dueDate, 
+            //collaborators: collaborators,
+            taskOwner: req.session.user._id
         })
-        res.redirect("/tasks");
+        console.log('req.session.user._id:', typeof req.session.user._id )
+        console.log(createdTask._id)
+        try {
+            await User.findByIdAndUpdate(req.session.user._id, {$push: {tasks: createdTask._id}} )
+            res.redirect("/tasks");
+        }
+        catch(error) {
+            console.log(error)
+        }
+  
     }
     catch(error) {
         res.render('create-task', {errorMessage: error})
