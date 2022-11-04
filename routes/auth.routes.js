@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
     const currentUser = await User.findOne( { email } )
     console.log('Current User: ', currentUser);
     if (!currentUser) {
-        res.render('authorization/login', { errorMessage: 'Username does not exist!' })
+        res.render('authorization/login', { errorMessage: 'User does not exist!' })
     } else {
         if (bcrypt.compareSync(password, currentUser.password)) {
             console.log('Session: ', req.session)

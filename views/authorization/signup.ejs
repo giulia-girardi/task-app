@@ -6,3 +6,7 @@
     <label>Password<input type="password" name="password" required/></label>
     <button type="submit">Signup</button>
 </form>
+
+<% if (typeof errorMessage !== "undefined") { %>
+    <p><%= errorMessage  %> </p>
+   <% } %>
