@@ -1,3 +1,4 @@
+<%- include('./partials/navbar.ejs') %>
 <h2>Edit Task</h2>
 <form action="<%= `/tasks/${oneTask.id}/edit` %>" method="POST">
     <label>Task name:<input type="text" name="taskName" value="<%= oneTask.taskName  %>" required/></label>
