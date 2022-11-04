@@ -6,8 +6,6 @@ const bcrypt = require('bcryptjs');
 const { default: mongoose } = require('mongoose');
 const {isLoggedOut, isLoggedIn} = require('../middleware/route-guard')
 
-
-
 //Get signup page
 router.get('/signup', isLoggedOut, (req, res) => {
     res.render('authorization/signup')
