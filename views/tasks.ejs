@@ -8,6 +8,8 @@
             <p><%= task.taskName  %> </p>
             <p><%= task.createdAt  %> </p>
             <p><%= task.dueDate  %> </p>
+            <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
+            <a href="">Delete</a>
         </div>
     <% }) %>
 </div>
