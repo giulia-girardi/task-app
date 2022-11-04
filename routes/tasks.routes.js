@@ -26,8 +26,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             //collaborators: collaborators,
             taskOwner: req.session.user._id
         })
-        console.log('req.session.user._id:', typeof req.session.user._id )
-        console.log(createdTask._id)
         try {
             await User.findByIdAndUpdate(req.session.user._id, {$push: {tasks: createdTask._id}} )
             res.redirect("/tasks");
