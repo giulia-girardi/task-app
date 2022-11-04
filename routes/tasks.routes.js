@@ -40,8 +40,8 @@ router.get("/:id/edit", async (req, res, next) => {
 router.post("/:id/edit", async (req, res, next) => {
     try {
         await TaskModel.findByIdAndUpdate(req.params.id, {
-            taskName: req.params.taskName,
-            dueDate: req.params.dueDate, 
+            taskName: req.body.taskName,
+            dueDate: req.body.dueDate, 
         })
         console.log(req.params)
         res.redirect("/tasks");
