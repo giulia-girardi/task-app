@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const app = require('../app')
 const User = require('../models/User.model')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { default: mongoose } = require('mongoose');
 
 //Get signup page
 
@@ -14,6 +15,17 @@ router.get('/signup', (req, res) => {
 router.post('/signup', async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
+
+        //Making sure that all fields are filled:
+        if (!firstName || !lastName || !email || !password) {
+            res.render('authorization/signup', {errorMessage: 'All fields are mandatory. Please provide your first Name, last Name, email and password. '});
+        } 
+
+        //Making sure that correct form of password is used:
+        if (password.length < 10) {
+            res.render('authorization/signup', {errorMessage: 'The password needs to have at least 10 characters.'});
+        }
+
         const salt = bcrypt.genSaltSync(10)
         const hashedPassword = bcrypt.hashSync(password, salt)
 
@@ -25,7 +37,13 @@ router.post('/signup', async (req, res) => {
         })
         res.redirect('/dashboard')
     } catch (error) {
-        res.render('authorization/signup', { errorMessage: error.message })
+        if (error instanceof mongoose.Error.ValidationError) {
+            res.status(500).render('authorization/signup', { errorMessage: error.message });
+        } else if (error.code === 11000) {
+            res.status(500).render('authorization/signup', {errorMessage: 'Email is already used.'})
+        } else {
+            res.render('authorization/signup', { errorMessage: error.message })
+        }
     }
 })
 
