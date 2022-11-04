@@ -27,7 +27,8 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    tasks: {type: [Schema.Types.ObjectId], ref: 'Task'}
+    tasks: {type: [Schema.Types.ObjectId], ref: 'Task'}, 
+    sharedTasks: {type: [Schema.Types.ObjectId], ref: 'Task'}, 
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

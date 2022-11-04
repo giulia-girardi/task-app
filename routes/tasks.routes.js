@@ -18,15 +18,17 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 /* POST Create Task page */
 router.post("/create", isLoggedIn, async (req, res, next) => {
     try {
-        const {taskName, dueDate} = req.body
-        //const currentUser = await User.findOne({email})
+        const {taskName, dueDate, collaborators} = req.body
         const createdTask = await TaskModel.create({
             taskName: taskName,
             dueDate: dueDate, 
-            //collaborators: collaborators,
+            collaborators: collaborators,
             taskOwner: req.session.user._id
         })
+
         try {
+            await User.findByIdAndUpdate(req.session.user._id, {$push: {sharedTasks: createdTask._id}} )
+            await User.findOneAndUpdate( {email: req.body.collaborators}, {$push: {sharedTasks: createdTask._id}} )
             await User.findByIdAndUpdate(req.session.user._id, {$push: {tasks: createdTask._id}} )
             res.redirect("/tasks");
         }
