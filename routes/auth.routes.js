@@ -4,14 +4,16 @@ const app = require('../app')
 const User = require('../models/User.model')
 const bcrypt = require('bcryptjs');
 const { default: mongoose } = require('mongoose');
+const {isLoggedOut, isLoggedIn} = require('../middleware/route-guard')
+
 
 //Get signup page
-router.get('/signup', (req, res) => {
+router.get('/signup', isLoggedOut, (req, res) => {
     res.render('authorization/signup')
 })
 
 //Post sign up data
-router.post('/signup', async (req, res) => {
+router.post('/signup', isLoggedOut, async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
 
@@ -48,12 +50,12 @@ router.post('/signup', async (req, res) => {
 })
 
 // Get Login page
-router.get('/login', (req, res) => {
+router.get('/login', isLoggedOut, (req, res) => {
     res.render('authorization/login')
 })
 
 // Post Login data
-router.post('/login', async (req, res) => {
+router.post('/login', isLoggedOut, async (req, res) => {
     const { email, password } = req.body;
     const currentUser = await User.findOne( { email } )
     console.log('Current User: ', currentUser);
@@ -71,7 +73,7 @@ router.post('/login', async (req, res) => {
 })
 
 //Create Logout
-router.get('/logout', (req, res, next) => {
+router.get('/logout', isLoggedIn, (req, res, next) => {
     req.session.destroy(error => {
       if (error) {
         next(error)
