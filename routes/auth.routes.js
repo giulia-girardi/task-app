@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const { default: mongoose } = require('mongoose');
 
 //Get signup page
-
 router.get('/signup', (req, res) => {
     res.render('authorization/signup')
 })
@@ -35,9 +34,6 @@ router.post('/signup', async (req, res) => {
             })
             const currentUser = await User.findOne( { email } )
             req.session.user = currentUser
-            console.log('SESSION =====> ', req.session);
-            console.log('req.session.user =====> ', req.session.user)
-
             res.redirect('/dashboard')
         }
     } catch (error) {
@@ -50,7 +46,6 @@ router.post('/signup', async (req, res) => {
         }
     }
 })
-
 
 // Get Login page
 router.get('/login', (req, res) => {
