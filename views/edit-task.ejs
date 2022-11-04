@@ -1,5 +1,5 @@
 <h2>Edit Task</h2>
-<form action="<%= `/tasks/${task.id}/edit` %>" method="POST">
+<form action="<%= `/tasks/${oneTask.id}/edit` %>" method="POST">
     <label>Task name:<input type="text" name="taskName" value="<%= oneTask.taskName  %>" required/></label>
     <label>Due date:<input type="text" name="dueDate" value="<%= oneTask.dueDate  %>" required/></label>
     <label>Collaborators:<input type="text" name="collaborators" value="<%= oneTask.collaborators  %>"/></label>
