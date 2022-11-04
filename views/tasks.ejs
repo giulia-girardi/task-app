@@ -5,9 +5,9 @@
 <div>
     <% allTasks.forEach(task => { %>
         <div class="task">
-            <p><%= task.taskName  %> </p>
-            <p><%= task.createdAt  %> </p>
-            <p><%= task.dueDate  %> </p>
+            <p>Task Name: <%= task.taskName  %> </p>
+            <p>Created at: <%= task.createdAt.toDateString()  %> </p>
+            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
             <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
             <a href="">Delete</a>
         </div>
