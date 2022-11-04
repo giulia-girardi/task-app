@@ -47,7 +47,18 @@ router.post("/:id/edit", async (req, res, next) => {
         res.redirect("/tasks");
     }
     catch(error) {
-        res.render('tasks', {errorMessage: error})
+        res.render(`${req.params.id}/edit`, {errorMessage: error})
+    }
+});
+
+/* POST Delete Task */
+router.post("/:id/delete", async (req, res, next) => {
+    try {
+        await TaskModel.findByIdAndDelete (req.params.id)
+        res.redirect("/tasks");
+    }
+    catch(error) {
+        res.render(`tasks`, {errorMessage: error})
     }
 });
 
