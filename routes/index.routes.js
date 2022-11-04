@@ -10,8 +10,10 @@ router.get("/", (req, res, next) => {
 /* GET Dashboard page */
 router.get("/dashboard", async (req, res, next) => {
   const today = new Date();
-  console.log(today)
-  const tasksDueToday = await TaskModel.find({dueDate: {$eq: today}})
+  const todayToString = today.toISOString().slice(0,10)
+  const todayNewFormat = todayToString + "T00:00:00.000+00:00"
+  
+  const tasksDueToday = await TaskModel.find({dueDate: {$eq: todayNewFormat}})
   console.p
   res.render("dashboard", {tasksDueToday});
 });
