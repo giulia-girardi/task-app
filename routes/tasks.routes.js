@@ -51,22 +51,10 @@ router.post("/:id/edit", async (req, res, next) => {
     }
 });
 
-/* GET Delete Task */
-router.get("/:id/delete", async (req, res, next) => {
-    try {
-        await TaskModel.findById(req.params.id)
-        res.redirect("/tasks")
-    }
-    catch(error){
-        res.render("tasks", {errorMessage: error})
-    }
-});
-
-
 /* POST Delete Task */
 router.post("/:id/delete", async (req, res, next) => {
     try {
-        await TaskModel.findByIdAndDelete (req.params.id)
+        await TaskModel.findByIdAndDelete(req.params.id)
         res.redirect("/tasks");
     }
     catch(error) {

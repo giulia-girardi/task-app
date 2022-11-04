@@ -9,7 +9,9 @@
             <p>Created at: <%= task.createdAt.toDateString()  %> </p>
             <p>Due date: <%= task.dueDate.toDateString()  %> </p>
             <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-            <a href='<%= `/tasks/${task.id}/delete` %> '>Delete</a>
+            <form action="/tasks/<%= task.id  %>/delete" method="POST">
+                <button>Delete</button>
+            </form>
         </div>
     <% }) %>
 </div>
