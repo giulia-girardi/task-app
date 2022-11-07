@@ -7,6 +7,7 @@
         <div class="task">
             <p>Task Name: <%= task.taskName  %> </p>
             <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+            <p>Collaborators: <%= task.collaborators  %> </p>
             <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
             <form action="/tasks/<%= task.id  %>/delete" method="POST">
                 <button>Delete</button>

@@ -26,9 +26,13 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             taskOwner: req.session.user._id
         })
 
+        let collaboratorsArray = collaborators.split(',');
+
         try {
             await User.findByIdAndUpdate(req.session.user._id, {$push: {sharedTasks: createdTask._id}} )
-            await User.findOneAndUpdate( {email: req.body.collaborators}, {$push: {sharedTasks: createdTask._id}} )
+            await collaboratorsArray.forEach(async (collaborator) => {
+                await User.findOneAndUpdate( {email: collaborator}, {$push: {sharedTasks: createdTask._id}} )
+            })
             await User.findByIdAndUpdate(req.session.user._id, {$push: {tasks: createdTask._id}} )
             res.redirect("/tasks");
         }
@@ -53,15 +57,26 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
         await TaskModel.findByIdAndUpdate(req.params.id, {
             taskName: req.body.taskName,
-            dueDate: req.body.dueDate, 
+            dueDate: req.body.dueDate,
+            collaborators: req.body.collaborators,
         })
-        console.log(req.params)
+
         res.redirect("/tasks");
     }
     catch(error) {
         res.render(`${req.params.id}/edit`, {errorMessage: error})
     }
 });
+
+/* POST Delete task from sharedTasks Property from deleted collaborator*/
+router.post("/tasks/collaborator/delete", isLoggedIn, async (req, res, next) => {
+    try {
+        console.log(req.body)
+        res.redirect('/tasks');
+    } catch (error) {
+        res.render(`${req.params.id}/edit`, {errorMessage: error})
+    }
+})
 
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
