@@ -8,7 +8,19 @@ const User = require('../models/User.model')
 router.get("/", isLoggedIn, async (req, res, next) => {
     const allTasks = await TaskModel.find({taskOwner: req.session.user._id})
     res.render("tasks", {allTasks});
-  });
+});
+
+/* POST Tasks Done page */
+router.post("/:id/done", isLoggedIn, async (req, res, next) => {
+    try{
+        await TaskModel.findByIdAndUpdate(req.params.id, {taskCompleted: true})
+        res.redirect("/tasks");
+    }
+    catch(error) {
+        res.render(`tasks`, {errorMessage: error})
+    }
+}); 
+
 
 /* GET Create Task page */
 router.get("/create", isLoggedIn, (req, res, next) => {

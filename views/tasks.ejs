@@ -1,16 +1,19 @@
 <%- include('./partials/navbar.ejs') %>
-<h2>Task list</h2>
+<h2>Tasks list</h2>
 <a href="/tasks/create">Create a task</a>
 
-<div>
-    <% allTasks.forEach(task => { %>
-        <div class="task">
-            <p>Task Name: <%= task.taskName  %> </p>
-            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
-            <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-            <form action="/tasks/<%= task.id  %>/delete" method="POST">
-                <button>Delete</button>
-            </form>
-        </div>
-    <% }) %>
-</div>
+<% allTasks.forEach(task => { %>
+    <p>Task Name: <%= task.taskName  %> </p>    
+    <div>
+        <form action="/tasks/<%= task.id  %>/done" method="POST">
+            <button type="submit" name="taskCompleted"></button>
+        </form>
+    </div>
+    <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+    <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
+    <form action="/tasks/<%= task.id  %>/delete" method="POST">
+        <button>Delete</button>
+    </form>
+<% }) %>
+
+    
