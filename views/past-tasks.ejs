@@ -1,0 +1,7 @@
+<%- include('./partials/navbar.ejs') %>
+<h1>Past Tasks</h1>
+
+<% pastTasks.forEach(task => { %>
+    <p>Task Name: <%= task.taskName  %> </p>    
+    <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+<% }) %>
