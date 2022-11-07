@@ -72,23 +72,25 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
     let collaboratorsArray = req.body.collaborators.split(", ");
+    console.log('1. Array of collabs: ', collaboratorsArray);
     let validCollaborators = [];
     let userNotFound = false;
-    collaboratorsArray.forEach(async (collaborator) => {
-      const findUser = await User.findOne({ email: collaborator });
+    await collaboratorsArray.forEach(async (collaborator) => {
+      const findUser = await User.findOne({ email: collaborator })
       if (!findUser) {
         userNotFound = true;
-        console.log('userNotFound inside forEach: ', userNotFound);
+        console.log('2. userNotFound inside forEach: ', userNotFound);
       } else if (findUser) {
         validCollaborators.push(collaborator);
         userNotFound = false;
       }
-    });
+    })
+    console.log('3. UserNotFound outside forEach: ', userNotFound);
     if (userNotFound) {
         console.log('UserNotFound outside forEach: ', userNotFound);
         res.render("edit-task", {errorMessage: 'User not found'})
     } else if(!userNotFound) {
-        console.log('validCollaborators Array: ', validCollaborators);
+        console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
     }
   } catch (error) {
     console.log(error);
