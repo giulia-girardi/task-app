@@ -2,6 +2,7 @@ const express = require('express');
 const TaskModel = require('../models/Task.model');
 const router = express.Router();
 const {isLoggedIn} = require('../middleware/route-guard')
+const User = require('../models/User.model')
 
 
 /* GET home page */
@@ -19,5 +20,16 @@ router.get("/dashboard", isLoggedIn, async (req, res, next) => {
   console.p
   res.render("dashboard", {tasksDueToday});
 });
+
+/* POST Dashboard Done page */
+router.post("/dashboard/:id/done", isLoggedIn, async (req, res, next) => {
+  try{
+    await TaskModel.findByIdAndUpdate(req.params.id, {taskCompleted: true})
+    res.redirect("/dashboard");
+  }
+  catch(error) {
+      res.render(`tasks`, {errorMessage: error})
+  }
+}); 
 
 module.exports = router;
