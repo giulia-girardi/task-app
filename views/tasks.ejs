@@ -2,7 +2,7 @@
 <h2>Tasks list</h2>
 <a href="/tasks/create">Create a task</a>
 
-<% allTasks.forEach(task => { %>
+<% allDueTasks.forEach(task => { %>
     <p>Task Name: <%= task.taskName  %> </p>    
     <div>
         <form action="/tasks/<%= task.id  %>/done" method="POST">

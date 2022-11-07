@@ -6,8 +6,8 @@ const User = require('../models/User.model')
 
 /* GET Tasks page */
 router.get("/", isLoggedIn, async (req, res, next) => {
-    const allTasks = await TaskModel.find({taskOwner: req.session.user._id})
-    res.render("tasks", {allTasks});
+    const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
+    res.render("tasks", {allDueTasks});
 });
 
 /* POST Tasks Done page */
