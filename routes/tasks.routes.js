@@ -38,9 +38,13 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             taskOwner: req.session.user._id
         })
 
+        let collaboratorsArray = collaborators.split(',');
+
         try {
             await User.findByIdAndUpdate(req.session.user._id, {$push: {sharedTasks: createdTask._id}} )
-            await User.findOneAndUpdate( {email: req.body.collaborators}, {$push: {sharedTasks: createdTask._id}} )
+            await collaboratorsArray.forEach(async (collaborator) => {
+                await User.findOneAndUpdate( {email: collaborator}, {$push: {sharedTasks: createdTask._id}} )
+            })
             await User.findByIdAndUpdate(req.session.user._id, {$push: {tasks: createdTask._id}} )
             res.redirect("/tasks");
         }
@@ -63,17 +67,37 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 /* POST Edit Task page */
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
+        let collaboratorsArray = req.body.collaborators.split(',');
         await TaskModel.findByIdAndUpdate(req.params.id, {
             taskName: req.body.taskName,
-            dueDate: req.body.dueDate, 
+            dueDate: req.body.dueDate,
         })
-        console.log(req.params)
+        await collaboratorsArray.forEach(async (collaborator) => {
+            const findUser = await User.findOne({email: collaborator});
+            console.log(findUser);
+            if (!findUser) {
+                res.render(`${req.params.id}/edit`, {errorMessage: 'User not found'})
+            } else {
+                await TaskModel.findByIdAndUpdate(req.params.id, {$push: {collaborators: collaborator}}) 
+            }
+        })
+
         res.redirect("/tasks");
     }
     catch(error) {
         res.render(`${req.params.id}/edit`, {errorMessage: error})
     }
 });
+
+/* POST Delete task from sharedTasks Property from deleted collaborator*/
+/*router.post("/:collaborator/delete", isLoggedIn, async (req, res, next) => {
+    try {
+        console.log(req.params)
+        res.render("edit-task", {oneTask});
+    } catch (error) {
+        res.render(`${req.params.id}/edit`, {errorMessage: error})
+    }
+})*/
 
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
