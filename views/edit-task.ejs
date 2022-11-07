@@ -6,3 +6,7 @@
     <label>Collaborators:<input type="text" name="collaborators" value="<%= oneTask.collaborators  %>"/></label>
     <button type="submit">Edit</button>
 </form>
+
+<% if (typeof errorMessage !== "undefined") { %>
+    <p><%= errorMessage  %> </p>
+   <% } %>
