@@ -15,9 +15,8 @@ router.get("/dashboard", isLoggedIn, async (req, res, next) => {
   const today = new Date();
   const todayToString = today.toISOString().slice(0,10)
   const todayNewFormat = todayToString + "T00:00:00.000+00:00"
-  
-  const tasksDueToday = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {dueDate: {$eq: todayNewFormat}}]})
-  console.p
+
+  const tasksDueToday = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {dueDate: {$eq: todayNewFormat}}, {taskCompleted: false}]})
   res.render("dashboard", {tasksDueToday});
 });
 
