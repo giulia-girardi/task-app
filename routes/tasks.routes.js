@@ -84,7 +84,7 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
         validCollaborators.push(collaborator);
         userNotFound = false;
       }
-    })
+    });
     console.log('3. UserNotFound outside forEach: ', userNotFound);
     if (userNotFound) {
         console.log('UserNotFound outside forEach: ', userNotFound);
