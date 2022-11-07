@@ -7,10 +7,7 @@
     <p>Current collaborators: 
         <ul>
             <% oneTask.collaborators.forEach(collaborator => { %>
-            <form action="/tasks/collaborator/delete" method="POST">
              <li><%= collaborator  %> </li>
-                <button>Delete collaborator</button>
-            </form>
             <% }) %>
         </ul>
     </p>

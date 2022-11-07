@@ -55,10 +55,19 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 /* POST Edit Task page */
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
+        let collaboratorsArray = req.body.collaborators.split(',');
         await TaskModel.findByIdAndUpdate(req.params.id, {
             taskName: req.body.taskName,
             dueDate: req.body.dueDate,
-            collaborators: req.body.collaborators,
+        })
+        await collaboratorsArray.forEach(async (collaborator) => {
+            const findUser = await User.findOne({email: collaborator});
+            console.log(findUser);
+            if (!findUser) {
+                res.render(`${req.params.id}/edit`, {errorMessage: 'User not found'})
+            } else {
+                await TaskModel.findByIdAndUpdate(req.params.id, {$push: {collaborators: collaborator}}) 
+            }
         })
 
         res.redirect("/tasks");
@@ -69,14 +78,14 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
 });
 
 /* POST Delete task from sharedTasks Property from deleted collaborator*/
-router.post("/tasks/collaborator/delete", isLoggedIn, async (req, res, next) => {
+/*router.post("/:collaborator/delete", isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.body)
-        res.redirect('/tasks');
+        console.log(req.params)
+        res.render("edit-task", {oneTask});
     } catch (error) {
         res.render(`${req.params.id}/edit`, {errorMessage: error})
     }
-})
+})*/
 
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
