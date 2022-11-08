@@ -190,7 +190,10 @@ router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
     //find task and delete it:
     await TaskModel.findByIdAndDelete(req.params.id);
     //check if task id is still in tasks property of user and delete it:
+    const taskIdInTasksProperty = await User.findByIdAndUpdate(req.session.user._id, {$pull: {tasks: {$in: [req.params.id]  } } } )
+    console.log('find the taskId: ', taskIdInTasksProperty);
     //check if task id is in sharedTasks property of the collaborators and delete it:
+    const taskIdinSharedTasks = await User.findAndUpdate()
     res.redirect("/tasks");
   } catch (error) {
     res.render(`tasks`, { errorMessage: error });
