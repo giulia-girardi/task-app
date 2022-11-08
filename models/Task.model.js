@@ -12,7 +12,7 @@ const TaskSchema = new Schema(
       type: Date,
       required: true,
     },
-    collaborators: [{type: Schema.Types.String, ref: 'User'}],
+    collaborators: [String],
     taskCompleted: {
         type: Boolean,
         default: false,
