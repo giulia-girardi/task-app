@@ -71,7 +71,7 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     try {
     let collaboratorsArray = req.body.collaborators.split(", ");
-    console.log('1. Array of collabs: ', collaboratorsArray);
+    //console.log('1. Array of collabs: ', collaboratorsArray);
     let validCollaborators = [];
     let userNotFound = false;
 
@@ -85,20 +85,29 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     arrayOfResponse.forEach((collaborator) => {
       if (!collaborator) {
         userNotFound = true;
-        console.log('2. userNotFound inside forEach: ', userNotFound);
+        //console.log('2. userNotFound inside forEach: ', userNotFound);
       } else if (collaborator) {
         validCollaborators.push(collaborator);
       }
     })
+    //console.log('Array of Response: ', arrayOfResponse);
 
 
-    console.log('3. UserNotFound outside forEach: ', userNotFound);
+    //console.log('3. UserNotFound outside forEach: ', userNotFound);
     if (userNotFound) {
-        console.log('UserNotFound outside forEach: ', userNotFound);
+        //console.log('UserNotFound outside forEach: ', userNotFound);
         const oneTask = await TaskModel.findById(req.params.id);
         res.render("edit-task", {errorMessage: 'User not found', oneTask})
     } else if(!userNotFound) {
         console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
+        const collaboratorsEmails = validCollaborators.map(collaborator => collaborator.email);
+        console.log('Mapped emails: ', collaboratorsEmails);
+        const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
+          //taskName: req.body.taskName,
+          //dueDate: req.body.dueDate,
+          $push: { collaborators: {$each: collaboratorsEmails} }
+        });
+        res.redirect('/tasks');
     }
   } catch (error) {
     console.log(error);
