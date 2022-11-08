@@ -1,7 +1,16 @@
 <%- include('./partials/navbar.ejs') %>
 <h1>Past Tasks</h1>
 
+<h3>Your tasks</h3>
 <% pastTasks.forEach(task => { %>
     <p>Task Name: <%= task.taskName  %> </p>    
     <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+<% }) %>
+
+
+<h3>Tasks shared with you</h3>
+<% sharedTasksDone.forEach(task => { %>
+    <p>Task Name: <%= task.taskName  %> </p>    
+    <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+    <p>Collaborators: <%= task.collaborators  %> </p>
 <% }) %>
