@@ -19,7 +19,7 @@
 <% }) %>
 
 <h3>Tasks shared with you</h3>
-<% sharedTasksPopulated.forEach(task => { %>
+<% sharedTasksDue.forEach(task => { %>
     <p>Task Name: <%= task.taskName  %> </p>    
     <div>
         <form action="/tasks/<%= task.id  %>/done" method="POST">

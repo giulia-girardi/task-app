@@ -6,12 +6,14 @@ const User = require("../models/User.model");
 
 /* GET Tasks page */
 router.get("/", isLoggedIn, async (req, res, next) => {
-    console.log(req.session.user)
     const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
-    const sharedTasks = await User.find({$and: [{email: req.session.user.email},{sharedTasks: {$ne: []}}]}).populate('sharedTasks')
-    const sharedTasksPopulated = sharedTasks[0].sharedTasks
-    console.log('sharedTasks >>>>>>>', sharedTasksPopulated)
-    res.render("tasks", {allDueTasks, sharedTasksPopulated});
+    const userWithSharedTask = await User.find({$and: [ {email: req.session.user.email}, {sharedTasks: {$ne: []}}]}).populate('sharedTasks')
+    const sharedTasksPopulated = userWithSharedTask[0].sharedTasks
+
+    // only have tasks still to be done
+    sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
+
+    res.render("tasks", {allDueTasks, sharedTasksDue});
 });
 
 /* POST Tasks Done page */
