@@ -160,11 +160,22 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
           (collaborator) => collaborator.email
         );
         //console.log('Mapped emails: ', collaboratorsEmails);
+
+        //Edit the task with the entered values from the form:
         const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
           taskName: req.body.taskName,
           dueDate: req.body.dueDate,
           $push: { collaborators: { $each: collaboratorsEmails } },
         });
+
+        //Push the task inside the sharedTasks property of the new collaborator:
+        collaboratorsEmails.forEach(async (collaborator) => {
+          await User.findOneAndUpdate(
+            { email: collaborator },
+            { $push: { sharedTasks: req.params.id } }
+          );
+        });
+
         res.redirect("/tasks");
       }
     }
@@ -176,7 +187,10 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
   try {
+    //find task and delete it:
     await TaskModel.findByIdAndDelete(req.params.id);
+    //check if task id is still in tasks property of user and delete it:
+    //check if task id is in sharedTasks property of the collaborators and delete it:
     res.redirect("/tasks");
   } catch (error) {
     res.render(`tasks`, { errorMessage: error });
