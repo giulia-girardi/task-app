@@ -30,31 +30,54 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 router.post("/create", isLoggedIn, async (req, res, next) => {
   try {
     const { taskName, dueDate, collaborators } = req.body;
-    const createdTask = await TaskModel.create({
-      taskName: taskName,
-      dueDate: dueDate,
-      collaborators: collaborators,
-      taskOwner: req.session.user._id,
-    });
 
+    //Check if added collaborators are valid users:
     let collaboratorsArray = collaborators.split(",");
+    const arrayOfPromises = [];
+    let userNotFound = false;
+    
+    collaboratorsArray.forEach(collab => {
+        arrayOfPromises.push(User.findOne({ email: collab }))
+    })
+    const arrayOfResponse = await Promise.all(arrayOfPromises)
+    const currentTask = await TaskModel.findById(req.params.id, );
 
-    try {
-      await User.findByIdAndUpdate(req.session.user._id, {
-        $push: { sharedTasks: createdTask._id },
+    let checkedCollaborators = [];
+    arrayOfResponse.forEach((collaborator) => {
+      if (!collaborator) {
+        userNotFound = true;
+      } else {
+        checkedCollaborators.push(collaborator.email);
+      }
+    })
+
+    if (userNotFound) {
+      res.render("create-task", { errorMessage: 'Collaborator is not a valid user.' });
+    } else {
+      const createdTask = await TaskModel.create({
+        taskName: taskName,
+        dueDate: dueDate,
+        $push: { collaborators: {$each: checkedCollaborators} },
+        taskOwner: req.session.user._id,
       });
-      await collaboratorsArray.forEach(async (collaborator) => {
-        await User.findOneAndUpdate(
-          { email: collaborator },
-          { $push: { sharedTasks: createdTask._id } }
-        );
-      });
-      await User.findByIdAndUpdate(req.session.user._id, {
-        $push: { tasks: createdTask._id },
-      });
-      res.redirect("/tasks");
-    } catch (error) {
-      console.log(error);
+
+      try {
+        await User.findByIdAndUpdate(req.session.user._id, {
+          $push: { sharedTasks: createdTask._id },
+        });
+        await collaboratorsArray.forEach(async (collaborator) => {
+          await User.findOneAndUpdate(
+            { email: collaborator },
+            { $push: { sharedTasks: createdTask._id } }
+          );
+        });
+        await User.findByIdAndUpdate(req.session.user._id, {
+          $push: { tasks: createdTask._id },
+        });
+        res.redirect("/tasks");
+      } catch (error) {
+        console.log(error);
+      }
     }
   } catch (error) {
     res.render("create-task", { errorMessage: error });
@@ -82,7 +105,7 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
         arrayOfPromises.push(User.findOne({ email: collab }))
     })
     const arrayOfResponse = await Promise.all(arrayOfPromises)
-    console.log('array responses:', arrayOfResponse);
+    //console.log('array responses:', arrayOfResponse);
     const currentTask = await TaskModel.findById(req.params.id, );
 
     arrayOfResponse.forEach((collaborator) => {
@@ -110,9 +133,9 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
       const oneTask = await TaskModel.findById(req.params.id);
       res.render("edit-task", {errorMessage: 'Collaborator already exists', oneTask})
     } else if (!userNotFound) {
-      console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
+      //console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
       const collaboratorsEmails = validCollaborators.map(collaborator => collaborator.email);
-      console.log('Mapped emails: ', collaboratorsEmails);
+      //console.log('Mapped emails: ', collaboratorsEmails);
       const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
         taskName: req.body.taskName,
         dueDate: req.body.dueDate,
