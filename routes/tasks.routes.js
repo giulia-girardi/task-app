@@ -8,7 +8,10 @@ const User = require("../models/User.model");
 router.get("/", isLoggedIn, async (req, res, next) => {
     console.log(req.session.user)
     const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
-    res.render("tasks", {allDueTasks});
+    const sharedTasks = await User.find({$and: [{email: req.session.user.email},{sharedTasks: {$ne: []}}]}).populate('sharedTasks')
+    const sharedTasksPopulated = sharedTasks[0].sharedTasks
+    console.log('sharedTasks >>>>>>>', sharedTasksPopulated)
+    res.render("tasks", {allDueTasks, sharedTasksPopulated});
 });
 
 /* POST Tasks Done page */
@@ -40,9 +43,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
     let collaboratorsArray = collaborators.split(",");
 
     try {
-      await User.findByIdAndUpdate(req.session.user._id, {
-        $push: { sharedTasks: createdTask._id },
-      });
       await collaboratorsArray.forEach(async (collaborator) => {
         await User.findOneAndUpdate(
           { email: collaborator },

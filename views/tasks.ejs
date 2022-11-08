@@ -1,7 +1,8 @@
 <%- include('./partials/navbar.ejs') %>
 <h2>Tasks list</h2>
+<h3>Your tasks</h3>
 <a href="/tasks/create">Create a task</a>
-
+<h3>Your tasks</h3>
 <% allDueTasks.forEach(task => { %>
     <p>Task Name: <%= task.taskName  %> </p>    
     <div>
@@ -17,4 +18,19 @@
     </form>
 <% }) %>
 
+<h3>Tasks shared with you</h3>
+<% sharedTasksPopulated.forEach(task => { %>
+    <p>Task Name: <%= task.taskName  %> </p>    
+    <div>
+        <form action="/tasks/<%= task.id  %>/done" method="POST">
+            <button type="submit" name="taskCompleted"></button>
+        </form>
+    </div>
+    <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+    <p>Collaborators: <%= task.collaborators  %> </p>
+    <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
+    <form action="/tasks/<%= task.id  %>/delete" method="POST">
+        <button>Delete</button>
+    </form>
+<% }) %>
     
