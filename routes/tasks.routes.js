@@ -187,13 +187,17 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
   try {
-    //find task and delete it:
-    await TaskModel.findByIdAndDelete(req.params.id);
     //check if task id is still in tasks property of user and delete it:
     const taskIdInTasksProperty = await User.findByIdAndUpdate(req.session.user._id, {$pull: {tasks: {$in: [req.params.id]  } } } )
     console.log('find the taskId: ', taskIdInTasksProperty);
     //check if task id is in sharedTasks property of the collaborators and delete it:
-    const taskIdinSharedTasks = await User.findAndUpdate()
+    const getTask = await TaskModel.findById(req.params.id);
+    const listOfCollaborators = getTask.collaborators;
+    listOfCollaborators.forEach(async (collaborator) => {
+      await User.findOneAndUpdate({email: collaborator}, {$pull: {sharedTasks: {$in: [req.params.id]  } } })
+    })
+    //find task and delete it:
+    await TaskModel.findByIdAndDelete(req.params.id);
     res.redirect("/tasks");
   } catch (error) {
     res.render(`tasks`, { errorMessage: error });
