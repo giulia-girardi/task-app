@@ -11,7 +11,7 @@ router.get("/", isLoggedIn, async (req, res, next) => {
     const sharedTasksPopulated = userWithSharedTask[0].sharedTasks
 
     // only have tasks still to be done
-    sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
+    const sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
 
     res.render("tasks", {allDueTasks, sharedTasksDue});
 });

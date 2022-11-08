@@ -9,5 +9,13 @@
     </form>
 </div>
 <% }) %>
+<% sharedTasksDue.forEach(task => { %>
+    <p><%= task.taskName %> </p>
+    <div>
+       <form action="/dashboard/<%= task.id  %>/done" method="POST">
+           <button type="submit" name="taskCompleted"></button>
+       </form>
+   </div>
+   <% }) %>
 <a href="/tasks">View all tasks</a>
 <a href="/tasks/create">Create a task</a>
