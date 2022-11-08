@@ -6,9 +6,11 @@ const User = require("../models/User.model");
 
 /* GET Tasks page */
 router.get("/", isLoggedIn, async (req, res, next) => {
-    console.log(req.session.user)
-    const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
-    res.render("tasks", {allDueTasks});
+  console.log(req.session.user);
+  const allDueTasks = await TaskModel.find({
+    $and: [{ taskOwner: req.session.user._id }, { taskCompleted: false }],
+  });
+  res.render("tasks", { allDueTasks });
 });
 
 /* POST Tasks Done page */
@@ -36,10 +38,10 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
     const arrayOfPromises = [];
     let userNotFound = false;
 
-    collaboratorsArray.forEach(collab => {
-        arrayOfPromises.push(User.findOne({ email: collab }))
-    })
-    const arrayOfResponse = await Promise.all(arrayOfPromises)
+    collaboratorsArray.forEach((collab) => {
+      arrayOfPromises.push(User.findOne({ email: collab }));
+    });
+    const arrayOfResponse = await Promise.all(arrayOfPromises);
 
     let checkedCollaborators = [];
     arrayOfResponse.forEach((collaborator) => {
@@ -48,10 +50,12 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
       } else {
         checkedCollaborators.push(collaborator.email);
       }
-    })
+    });
 
     if (userNotFound) {
-      res.render("create-task", { errorMessage: 'Collaborator is not a valid user.' });
+      res.render("create-task", {
+        errorMessage: "Collaborator is not a valid user.",
+      });
     } else {
       const createdTask = await TaskModel.create({
         taskName: taskName,
@@ -61,7 +65,7 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
       });
 
       try {
-          await User.findByIdAndUpdate(req.session.user._id, {
+        await User.findByIdAndUpdate(req.session.user._id, {
           $push: { sharedTasks: createdTask._id },
         });
         await collaboratorsArray.forEach(async (collaborator) => {
@@ -91,62 +95,72 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 
 /* POST Edit Task page */
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
-    try {
+  try {
     let collaboratorsArray = req.body.collaborators.split(", ");
-    //console.log('1. Array of collabs: ', collaboratorsArray);
-    let validCollaborators = [];
-    let userNotFound = false;
-    let duplicateCollaborator = false;
+    console.log('1. Array of collabs: ', collaboratorsArray);
 
-
-    const arrayOfPromises = []
-    collaboratorsArray.forEach(collab => {
-        arrayOfPromises.push(User.findOne({ email: collab }))
-    })
-    const arrayOfResponse = await Promise.all(arrayOfPromises)
-    //console.log('array responses:', arrayOfResponse);
-    const currentTask = await TaskModel.findById(req.params.id, );
-
-    arrayOfResponse.forEach((collaborator) => {
-      if (!collaborator) {
-        userNotFound = true;
-        //console.log('2. userNotFound inside forEach: ', userNotFound);
-      } else if (collaborator) {
-        //console.log('check existing collab: ', checkExistingCollaborator._conditions.collaborators);
-        if (!currentTask.collaborators.includes(collaborator.email)) {
-          validCollaborators.push(collaborator);
-        } else {
-          duplicateCollaborator = true;
-        }
-      }
-    })
-    //console.log('Array of Response: ', arrayOfResponse);
-
-
-    //console.log('3. UserNotFound outside forEach: ', userNotFound);
-    if (userNotFound) {
-        //console.log('UserNotFound outside forEach: ', userNotFound);
-        const oneTask = await TaskModel.findById(req.params.id);
-        res.render("edit-task", {errorMessage: 'User not found', oneTask})
-    } else if (duplicateCollaborator) {
-      const oneTask = await TaskModel.findById(req.params.id);
-      res.render("edit-task", {errorMessage: 'Collaborator already exists', oneTask})
-    } else if (!userNotFound) {
-      //console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
-      const collaboratorsEmails = validCollaborators.map(collaborator => collaborator.email);
-      //console.log('Mapped emails: ', collaboratorsEmails);
+    if (!collaboratorsArray[0]) {
       const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
         taskName: req.body.taskName,
         dueDate: req.body.dueDate,
-        $push: { collaborators: {$each: collaboratorsEmails} }
       });
-      res.redirect('/tasks');
-  }
+      res.redirect("/tasks");
+    } else if (collaboratorsArray.length > 0) {
+      let validCollaborators = [];
+      let userNotFound = false;
+      let duplicateCollaborator = false;
+      const arrayOfPromises = [];
+      collaboratorsArray.forEach((collab) => {
+        arrayOfPromises.push(User.findOne({ email: collab }));
+      });
+      const arrayOfResponse = await Promise.all(arrayOfPromises);
+      //console.log('array responses:', arrayOfResponse);
+      const currentTask = await TaskModel.findById(req.params.id);
+
+      arrayOfResponse.forEach((collaborator) => {
+        if (!collaborator) {
+          userNotFound = true;
+          //console.log('2. userNotFound inside forEach: ', userNotFound);
+        } else if (collaborator) {
+          //console.log('check existing collab: ', checkExistingCollaborator._conditions.collaborators);
+          if (!currentTask.collaborators.includes(collaborator.email)) {
+            validCollaborators.push(collaborator);
+          } else {
+            duplicateCollaborator = true;
+          }
+        }
+      });
+      //console.log('Array of Response: ', arrayOfResponse);
+
+      //console.log('3. UserNotFound outside forEach: ', userNotFound);
+      if (userNotFound) {
+        //console.log('UserNotFound outside forEach: ', userNotFound);
+        const oneTask = await TaskModel.findById(req.params.id);
+        res.render("edit-task", { errorMessage: "User not found", oneTask });
+      } else if (duplicateCollaborator) {
+        const oneTask = await TaskModel.findById(req.params.id);
+        res.render("edit-task", {
+          errorMessage: "Collaborator already exists",
+          oneTask,
+        });
+      } else if (!userNotFound) {
+        //console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
+        const collaboratorsEmails = validCollaborators.map(
+          (collaborator) => collaborator.email
+        );
+        //console.log('Mapped emails: ', collaboratorsEmails);
+        const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
+          taskName: req.body.taskName,
+          dueDate: req.body.dueDate,
+          $push: { collaborators: { $each: collaboratorsEmails } },
+        });
+        res.redirect("/tasks");
+      }
+    }
   } catch (error) {
     console.log(error);
   }
 });
-
 
 /* POST Delete Task */
 router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
