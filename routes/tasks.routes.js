@@ -40,8 +40,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
         arrayOfPromises.push(User.findOne({ email: collab }))
     })
     const arrayOfResponse = await Promise.all(arrayOfPromises)
-    //const currentTask = await TaskModel.findById(req.params.id, );
-    console.log('arrayofResponses: ', arrayOfResponse);
 
     let checkedCollaborators = [];
     arrayOfResponse.forEach((collaborator) => {
@@ -51,7 +49,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
         checkedCollaborators.push(collaborator.email);
       }
     })
-    console.log('CheckedCollaborators: ', checkedCollaborators);
 
     if (userNotFound) {
       res.render("create-task", { errorMessage: 'Collaborator is not a valid user.' });
@@ -62,7 +59,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
         collaborators: checkedCollaborators,
         taskOwner: req.session.user._id,
       });
-      console.log('Created task: ', createdTask);
 
       try {
           await User.findByIdAndUpdate(req.session.user._id, {
