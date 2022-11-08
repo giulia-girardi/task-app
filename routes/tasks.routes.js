@@ -78,9 +78,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
         });
   
         try {
-          await User.findByIdAndUpdate(req.session.user._id, {
-            $push: { sharedTasks: createdTask._id },
-          });
           await collaboratorsArray.forEach(async (collaborator) => {
             await User.findOneAndUpdate(
               { email: collaborator },
