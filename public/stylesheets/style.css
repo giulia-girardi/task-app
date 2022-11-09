@@ -1,36 +1,33 @@
 /* colors: 
-Blue: #2e4057
-Light gray: #cdd6dd
-Yellow: #f7ee7f
 Dark gray: #2f2d2e
-Pink: #cd8987
+Red: #cf5c36
+Light gray: #eee5e9
+Medium gray: #7c7c7c
+Yellow: efc88b
+Dark blue: #2e4057
 
 font: Inter
  */
-
 body {
-  padding: 50px;
+  margin: 0;
   font: 1rem "Inter", Helvetica, Arial, sans-serif;
   background-color: #cf5c36;
   display: flex;
   justify-content: center;
   letter-spacing: 1px;
+  flex-direction: column;
 }
-
 a {
   color: #00b7ff;
 }
-
 h1 {
   color: #2e4057;
   font-size: 2rem;
 }
-
 p {
   color: #2f2d2e;
   font-size: 1.2rem;
 }
-
 .button {
   background-color: #2e4057;
   color:#efc88b;
@@ -43,17 +40,14 @@ p {
   text-align: center;
   font-weight: bold;
 }
-
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
-
 .login {
   background-color: #efc88b;
   color:#2f2d2e;
 }
-
 .container {
   background-color: #eee5e9;
   border: 5px #2f2d2e solid;
@@ -63,4 +57,36 @@ p {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  margin: 3%;
+}
+nav ul {
+  display: flex;
+}
+nav ul li {
+  display: flex;
+  list-style: none;
+  padding: 2%;
+}
+.menuitem {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #2f2d2e;
+}
+.tabpage {
+  background-color: #eee5e9;
+  padding: 5%;
+}
+.tabtitle{
+  display: flex;
+  background-color: #7c7c7c;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  color: #2f2d2e;
+}
+@media (max-width: 600px) {
+  .button-container {
+    flex-wrap: wrap;
+  }
 }
