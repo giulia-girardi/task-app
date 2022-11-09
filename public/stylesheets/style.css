@@ -113,7 +113,6 @@ nav ul li {
   text-align: center;
   font-weight: bold;
 }
-<<<<<<< HEAD
 .welcomepage {
   background-color: #cf5c36;
   height: 100%;
@@ -131,8 +130,6 @@ nav ul li {
   width: 100vw;
 }
 
-@media (max-width: 768px) {
-=======
 
 .tabpage > h3 {
   font-size: 2.0rem;
@@ -202,8 +199,7 @@ nav ul li {
   height: 30px;
   border-style: none;
 }
-@media (max-width: 600px) {
->>>>>>> lisa
+@media (max-width: 768px) {
   .button-container {
     flex-wrap: wrap;
   }

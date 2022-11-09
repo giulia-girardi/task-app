@@ -1,46 +1,8 @@
-<div class="app">
-    <%- include('./partials/navbar.ejs') %>
-    <div class="pagecontent">
-        <div class="tabtitle">
-            <h2>Task List</h2>
-            <a href="/tasks/create" id="createtaskbutton">Create a task</a>
-        </div>
-        <div class="tabpage">
-            <h3>Your tasks</h3>
-            <% allDueTasks.forEach(task => { %>
-                <p>Task Name: <%= task.taskName  %> </p>    
-                <div>
-                    <form action="/tasks/<%= task.id  %>/done" method="POST">
-                        <button type="submit" name="taskCompleted"></button>
-                    </form>
-                </div>
-                <p>Due date: <%= task.dueDate.toDateString()  %> </p>
-                <p>Collaborators: <%= task.collaborators  %> </p>
-                <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-                <form action="/tasks/<%= task.id  %>/delete" method="POST">
-                    <button>Delete</button>
-                </form>
-            <% }) %>
-            <h3>Tasks shared with you</h3>
-            <% sharedTasksDue.forEach(task => { %>
-                <p>Task Name: <%= task.taskName  %> </p>    
-                <div>
-                    <form action="/tasks/<%= task.id  %>/done" method="POST">
-                        <button type="submit" name="taskCompleted"></button>
-                    </form>
-                </div>
-                <p>Due date: <%= task.dueDate.toDateString()  %> </p>
-                <p>Collaborators: <%= task.collaborators  %> </p>
-                <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-                <form action="/tasks/<%= task.id  %>/delete" method="POST">
-                    <button>Delete</button>
-                </form>
-            <% }) %>
-        </div>
-    </div>
+<%- include('./partials/navbar.ejs') %>
+<div class="tabtitle">
+    <h2>Tasks list</h2>
+    <a href="/tasks/create" id="createtask">Create a task</a>
 </div>
-<<<<<<< HEAD
-=======
 <div class="tabpage">
 
     <h3>Your tasks</h3>
@@ -85,4 +47,3 @@
         </div>
     <% }) %>
 </div>
->>>>>>> lisa
