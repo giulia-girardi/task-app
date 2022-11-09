@@ -64,6 +64,45 @@ p {
   text-align: center;
   margin: 3%;
 }
+.authpages {
+  padding: 5%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+.inputblock {
+  display: flex;
+  align-items: center;
+}
+input {
+  border-radius: 5px;
+  height: 1.6rem;
+  padding: 3%;
+  background-color: eee5e9;
+  border: none;
+}
+label {
+  color: #2f2d2e;
+  font-size: 1.2rem;
+  margin: 3%;
+}
+.smalltext {
+  padding: 3%;
+  font-size: 0.8rem;
+}
+.signuplink {
+  color: #2f2d2e;
+}
+.no-border{
+  border: none;
+  font-size: 1.2rem;
+  color: #2e4057;
+}
 nav {
   background-color: #cf5c36;
   max-width: 200px;
@@ -113,7 +152,7 @@ nav ul li {
   text-align: center;
   font-weight: bold;
 }
-.welcomepage {
+.outsidepage {
   background-color: #cf5c36;
   height: 100%;
   width: 100%;
