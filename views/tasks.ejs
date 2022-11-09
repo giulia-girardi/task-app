@@ -39,3 +39,50 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+<div class="tabpage">
+
+    <h3>Your tasks</h3>
+    <% allDueTasks.forEach(task => { %>
+        <div class="task">
+            <div class="task-edit-delete">
+                <div class="task-complete">
+                    <p class="task-name"><%= task.taskName  %></p>
+                    <form action="/tasks/<%= task.id  %>/done" method="POST">
+                    <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                    </form>
+                </div>
+                <div class="edit-delete">
+                    <a class="edit" href='<%= `/tasks/${task.id}/edit` %> '></a>
+                    <form action="/tasks/<%= task.id  %>/delete" method="POST">
+                    <button class="delete-btn"></button>
+                    </form>
+                </div>
+            </div>  
+            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+            <p>Collaborators: <%= task.collaborators  %> </p>
+        </div>
+    <% }) %>
+
+    <h3>Tasks shared with you</h3>
+    <% sharedTasksDue.forEach(task => { %>
+        <div class="task">
+            <div class="task-edit-delete">
+                <p>Task Name: <%= task.taskName  %> </p>
+                <a href='<%= `/tasks/${task.id}/edit` %> '></a>
+                <form action="/tasks/<%= task.id  %>/delete" method="POST">
+                    <button class="delete-btn"></button>
+                </form>
+            </div> 
+            <div>
+                <form action="/tasks/<%= task.id  %>/done" method="POST">
+                    <button type="submit" name="taskCompleted"></button>
+                </form>
+            </div>
+            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+            <p>Collaborators: <%= task.collaborators  %> </p> 
+        </div>
+    <% }) %>
+</div>
+>>>>>>> lisa
