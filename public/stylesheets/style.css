@@ -1,6 +1,20 @@
+/* colors: 
+Blue: #2e4057
+Light gray: #cdd6dd
+Yellow: #f7ee7f
+Dark gray: #2f2d2e
+Pink: #cd8987
+
+font: Inter
+ */
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1rem "Inter", Helvetica, Arial, sans-serif;
+  background-color: #cf5c36;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 1px;
 }
 
 a {
@@ -8,5 +22,45 @@ a {
 }
 
 h1 {
-  color: 15px;
+  color: #2e4057;
+  font-size: 2rem;
+}
+
+p {
+  color: #2f2d2e;
+  font-size: 1.2rem;
+}
+
+.button {
+  background-color: #2e4057;
+  color:#efc88b;
+  text-transform: uppercase;
+  padding: 3.5% 0;
+  text-decoration: none;
+  margin: 3.5%;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login {
+  background-color: #efc88b;
+  color:#2f2d2e;
+}
+
+.container {
+  background-color: #eee5e9;
+  border: 5px #2f2d2e solid;
+  padding: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
