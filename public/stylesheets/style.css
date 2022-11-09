@@ -117,13 +117,13 @@ nav {
   max-width: 200px;
   flex: 1 1 0;
   padding: 2rem 1rem;
-
 }
-nav ul {
+ul {
   display: flex;
   padding: 0;
   margin: 0;
   flex-direction: column;
+
 }
 nav ul li {
   display: flex;
@@ -255,6 +255,17 @@ font-weight: bolder;
   width: 30px;
   height: 30px;
   border-style: none;
+}
+.twocolumnscontainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.leftcolumn {
+  width: 50%;
+}
+.rightcolumn {
+  width: 50%;
 }
 @media (max-width: 768px) {
   .button-container {
