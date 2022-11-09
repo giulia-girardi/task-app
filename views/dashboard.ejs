@@ -8,20 +8,26 @@
             <div class="twocolumnscontainer">
                 <div class="leftcolumn">
                     <h2>Tasks due today:</h2>
-                    <div class="task">
-                        <% tasksDueToday.forEach(task => { %>
-                            <p><%= task.taskName %> </p>
-                            <form action="/dashboard/<%= task.id  %>/done" method="POST">
-                                <button class="complete-btn" type="submit" name="taskCompleted"></button>
-                            </form>
-                        <% }) %>
-                        <% sharedTasksDue.forEach(task => { %>
-                        <p><%= task.taskName %> </p>
-                            <form action="/dashboard/<%= task.id  %>/done" method="POST">
-                                <button class="complete-btn" type="submit" name="taskCompleted"></button>
-                            </form>
-                        <% }) %>
-                        <a href="/tasks">View all tasks</a>
+                    <div class="task inlinecheck">
+                        <div>
+                            <% tasksDueToday.forEach(task => { %>
+                                <p class="task-name"><%= task.taskName %> </p>
+                                <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                                    <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                                </form>
+                            <% }) %>
+                        </div>
+                        <div>
+                            <% sharedTasksDue.forEach(task => { %>
+                                <p class="task-name"><%= task.taskName %> </p>
+                                    <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                                        <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                                    </form>
+                                <% }) %>
+                        </div>
+                        <div>
+                            <a href="/tasks">View all tasks</a>
+                        </div>
                     </div>
                 </div>
                 <div class="rightcolumn">

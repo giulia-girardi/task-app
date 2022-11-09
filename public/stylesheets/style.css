@@ -267,6 +267,7 @@ font-weight: bolder;
 .rightcolumn {
   width: 50%;
 }
+
 @media (max-width: 768px) {
   .button-container {
     flex-wrap: wrap;
