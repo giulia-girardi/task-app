@@ -1,6 +1,8 @@
 <%- include('./partials/navbar.ejs') %>
+<div class="tabtitle">
+    <h2>Dashboard</h2>
+</div>
 <div class="tabpage">
-<h1>Dashboard</h1>
 <h2>Tasks due today:</h2>
 <% tasksDueToday.forEach(task => { %>
  <p><%= task.taskName %> </p>

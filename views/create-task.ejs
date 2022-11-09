@@ -1,5 +1,8 @@
 <%- include('./partials/navbar.ejs') %>
-<h2>Create new Task</h2>
+<div class="tabtitle">
+    <h2>Create Task</h2>
+</div>
+<div class="tabpage">
 <form action="/tasks/create" method="POST">
     <label>Task name:<input type="text" name="taskName" required/></label>
     <label>Due date:<input type="date" name="dueDate" required/></label>
@@ -10,3 +13,4 @@
 <% if (typeof errorMessage !== "undefined") { %>
     <p><%= errorMessage  %> </p>
    <% } %>
+</div>
