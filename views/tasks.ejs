@@ -7,7 +7,13 @@
 
     <h3>Your tasks</h3>
     <% allDueTasks.forEach(task => { %>
-        <p>Task Name: <%= task.taskName  %> </p>    
+        <div class="task-edit-delete">
+            <p>Task Name: <%= task.taskName  %></p>
+            <a href='<%= `/tasks/${task.id}/edit` %> '></a>
+            <form action="/tasks/<%= task.id  %>/delete" method="POST">
+                <button class="delete-btn"></button>
+            </form>
+        </div>  
         <div>
             <form action="/tasks/<%= task.id  %>/done" method="POST">
                 <button type="submit" name="taskCompleted"></button>
@@ -15,15 +21,17 @@
         </div>
         <p>Due date: <%= task.dueDate.toDateString()  %> </p>
         <p>Collaborators: <%= task.collaborators  %> </p>
-        <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-        <form action="/tasks/<%= task.id  %>/delete" method="POST">
-            <button>Delete</button>
-        </form>
     <% }) %>
 
     <h3>Tasks shared with you</h3>
     <% sharedTasksDue.forEach(task => { %>
-        <p>Task Name: <%= task.taskName  %> </p>    
+        <div class="task-edit-delete">
+        <p>Task Name: <%= task.taskName  %> </p>
+        <a href='<%= `/tasks/${task.id}/edit` %> '></a>
+        <form action="/tasks/<%= task.id  %>/delete" method="POST">
+            <button class="delete-btn"></button>
+        </form>
+        </div> 
         <div>
             <form action="/tasks/<%= task.id  %>/done" method="POST">
                 <button type="submit" name="taskCompleted"></button>
@@ -31,9 +39,5 @@
         </div>
         <p>Due date: <%= task.dueDate.toDateString()  %> </p>
         <p>Collaborators: <%= task.collaborators  %> </p>
-        <a href='<%= `/tasks/${task.id}/edit` %> '>Edit</a>
-        <form action="/tasks/<%= task.id  %>/delete" method="POST">
-            <button>Delete</button>
-        </form>
     <% }) %>
 </div>

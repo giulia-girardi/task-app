@@ -97,6 +97,36 @@ nav ul li {
   text-align: center;
   font-weight: bold;
 }
+
+.tabpage > h3 {
+  font-size: 1.5rem;
+}
+
+.tabpage > p {
+  font-size: 1.1rem;
+}
+
+.task-edit-delete {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.0rem;
+}
+
+.task-edit-delete > a {
+  background-image: url('/images/edit-list.png');
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+}
+
+.delete-btn {
+  background-image: url('/images/delete.png');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  border-style: none;
+}
 @media (max-width: 600px) {
   .button-container {
     flex-wrap: wrap;
