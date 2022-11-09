@@ -4,15 +4,17 @@
     <label>Task name:<input type="text" name="taskName" value="<%= oneTask.taskName  %>" required/></label>
     <label>Due date:<input type="date" name="dueDate" value="<%= oneTask.dueDate.toISOString().slice(0,10) %>" required/></label>
     <label>New collaborator:<input type="text" name="collaborators"  %>"/></label>
-    <p>Current collaborators: 
-        <ul>
-            <% oneTask.collaborators.forEach(collaborator => { %>
-             <li><%= collaborator  %> </li>
-            <% }) %>
-        </ul>
-    </p>
     <button type="submit">Edit</button>
 </form>
+    <p>Current collaborators: 
+        <ul>
+            <div class="collab-list">
+                <% oneTask.collaborators.forEach(collaborator => { %>
+                    <li><%= collaborator  %> </li>
+                <% }) %>
+            </div>
+        </ul>
+    </p>
 
 <% if (typeof errorMessage !== "undefined") { %>
     <p><%= errorMessage  %> </p>
