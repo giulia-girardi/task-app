@@ -1,11 +1,18 @@
-<h1>Login</h1>
-<form action="/login" method="POST">
-    <label>Email<input type="email" name="email" required/></label>
-    <label>Password<input type="password" name="password" required/></label>
-    <button type="submit">Login</button>
-    <p>Not registered? <span><a href="/signup">Create Account</a></span></p>
-</form>
-
-<% if (typeof errorMessage !== "undefined") { %>
-    <p><%= errorMessage  %> </p>
-   <% } %>
+<div class="outsidepage authpages">
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <div class="inputblock">
+            <label>Email<input type="email" name="email" required/></label>
+        </div>
+        <div class="inputblock">
+            <label>Password<input type="password" name="password" required/></label>
+        </div>
+        <div>
+            <button class="button login no-border" type="submit">Login</button>
+        </div>
+        <p class="smalltext">Not registered? <span><a class="signuplink" href="/signup">Create Account</a></span></p>
+    </form>
+    <% if (typeof errorMessage !== "undefined") { %>
+        <p><%= errorMessage  %> </p>
+    <% } %>
+</div>
