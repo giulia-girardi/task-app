@@ -85,6 +85,18 @@ nav ul li {
   padding: 0 5%;
   color: #2f2d2e;
 }
+#createtask {
+  background-color: #efc88b;
+  color: #2f2d2e;
+  text-transform: uppercase;
+  padding: 2% 0;
+  text-decoration: none;
+  margin: 1%;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+}
 @media (max-width: 600px) {
   .button-container {
     flex-wrap: wrap;
