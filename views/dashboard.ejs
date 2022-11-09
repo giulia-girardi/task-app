@@ -1,25 +1,29 @@
-<%- include('./partials/navbar.ejs') %>
-<div class="tabtitle">
-    <h2>Dashboard</h2>
-</div>
-<div class="tabpage">
-<h2>Tasks due today:</h2>
-<% tasksDueToday.forEach(task => { %>
- <p><%= task.taskName %> </p>
- <div>
-    <form action="/dashboard/<%= task.id  %>/done" method="POST">
-        <button type="submit" name="taskCompleted"></button>
-    </form>
-</div>
-<% }) %>
-<% sharedTasksDue.forEach(task => { %>
-    <p><%= task.taskName %> </p>
-    <div>
-       <form action="/dashboard/<%= task.id  %>/done" method="POST">
-           <button type="submit" name="taskCompleted"></button>
-       </form>
-   </div>
-   <% }) %>
-<a href="/tasks">View all tasks</a>
-<a href="/tasks/create">Create a task</a>
+<div class="app">
+    <%- include('./partials/navbar.ejs') %>
+    <div class="pagecontent">
+        <div class="tabtitle">
+            <h2>Dashboard</h2>
+        </div>
+        <div class="tabpage">
+        <h2>Tasks due today:</h2>
+        <% tasksDueToday.forEach(task => { %>
+        <p><%= task.taskName %> </p>
+        <div>
+            <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                <button type="submit" name="taskCompleted"></button>
+            </form>
+        </div>
+        <% }) %>
+        <% sharedTasksDue.forEach(task => { %>
+            <p><%= task.taskName %> </p>
+            <div>
+            <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                <button type="submit" name="taskCompleted"></button>
+            </form>
+        </div>
+        <% }) %>
+        <a href="/tasks">View all tasks</a>
+        <a href="/tasks/create">Create a task</a>
+        </div>
+    </div>
 </div>

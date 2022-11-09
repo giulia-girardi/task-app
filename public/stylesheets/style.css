@@ -8,8 +8,12 @@ Dark blue: #2e4057
 
 font: Inter
  */
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   font: 1rem "Inter", Helvetica, Arial, sans-serif;
   background-color: #eee5e9;
   display: flex;
@@ -62,16 +66,21 @@ p {
 }
 nav {
   background-color: #cf5c36;
+  max-width: 200px;
+  flex: 1 1 0;
+  padding: 2rem 1rem;
+
 }
 nav ul {
   display: flex;
   padding: 0;
   margin: 0;
+  flex-direction: column;
 }
 nav ul li {
   display: flex;
   list-style: none;
-  padding: 2%;
+  padding: 0.7rem;
 }
 .menuitem {
   text-decoration: none;
@@ -90,12 +99,13 @@ nav ul li {
   align-items: center;
   padding: 0 5%;
   color: #2f2d2e;
+  padding: 2%;
 }
 #createtaskbutton {
   background-color: #efc88b;
   color: #2f2d2e;
   text-transform: uppercase;
-  padding: 2% 0;
+  padding: 1% 0;
   text-decoration: none;
   margin: 1%;
   border-radius: 10px;
@@ -109,8 +119,39 @@ nav ul li {
   width: 100%;
   position: absolute;
 }
-@media (max-width: 600px) {
+.app {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+}
+.pagecontent {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+@media (max-width: 768px) {
   .button-container {
     flex-wrap: wrap;
+  }
+  nav {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vh;
+    font-size: 8px;
+    height: auto;
+  }
+  nav ul {
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-between;
+  }
+  .menuitems {
+    display: flex;
+    flex-direction: row;
+  }
+  .menuitem {
+    display: block;
   }
 }

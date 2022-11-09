@@ -1,16 +1,20 @@
-<%- include('./partials/navbar.ejs') %>
-<div class="tabtitle">
-    <h2>Create Task</h2>
-</div>
-<div class="tabpage">
-<form action="/tasks/create" method="POST">
-    <label>Task name:<input type="text" name="taskName" required/></label>
-    <label>Due date:<input type="date" name="dueDate" required/></label>
-    <label>Collaborators:<input type="text" name="collaborators"/></label>
-    <button type="submit">Create</button>
-</form>
+<div class="app">
+    <%- include('./partials/navbar.ejs') %>
+    <div class="pagecontent">
+        <div class="tabtitle">
+            <h2>Create Task</h2>
+        </div>
+        <div class="tabpage">
+        <form action="/tasks/create" method="POST">
+            <label>Task name:<input type="text" name="taskName" required/></label>
+            <label>Due date:<input type="date" name="dueDate" required/></label>
+            <label>Collaborators:<input type="text" name="collaborators"/></label>
+            <button type="submit">Create</button>
+        </form>
 
-<% if (typeof errorMessage !== "undefined") { %>
-    <p><%= errorMessage  %> </p>
-   <% } %>
+        <% if (typeof errorMessage !== "undefined") { %>
+            <p><%= errorMessage  %> </p>
+        <% } %>
+        </div>
+    </div>
 </div>
