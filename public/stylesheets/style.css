@@ -29,9 +29,18 @@ h1 {
   color: #2e4057;
   font-size: 2rem;
 }
+h3 {
+  color: #2e4057;
+}
 p {
   color: #2f2d2e;
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+#texttasks {
+  font-weight: 100;
+}
+.textpadding {
+  padding-top: 1.5%;
 }
 .button {
   background-color: #2e4057;
@@ -213,7 +222,7 @@ font-weight: bolder;
 
 .task-name {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 

@@ -5,18 +5,22 @@
             <h2>Completed Tasks</h2>
         </div>
         <div class="tabpage">
-        <h3>Your tasks</h3>
+        <h3>Your Completed Tasks</h3>
         <% pastTasks.forEach(task => { %>
-            <p>Task Name: <%= task.taskName  %> </p>    
-            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
+            <div class="task">
+                <p class="task-name"><%= task.taskName  %> </p>    
+                <p id="texttasks" class="textpadding">Due date: <%= task.dueDate.toDateString()  %> </p>
+            </div>
         <% }) %>
 
 
-        <h3>Tasks shared with you</h3>
+        <h3>Shared Completed Tasks</h3>
         <% sharedTasksDone.forEach(task => { %>
-            <p>Task Name: <%= task.taskName  %> </p>    
-            <p>Due date: <%= task.dueDate.toDateString()  %> </p>
-            <p>Collaborators: <%= task.collaborators  %> </p>
+            <div class="task">
+                <p class="task-name"><%= task.taskName  %> </p>    
+                <p id="texttasks" class="textpadding">Due date: <%= task.dueDate.toDateString()  %> </p>
+                <p id="texttasks">Collaborators: <%= task.collaborators  %> </p>
+            </div>
         <% }) %>
         </div>
     </div>
