@@ -1,13 +1,23 @@
-<h1>Signup</h1>
-<form action="/signup" method="POST">
-    <label>First Name<input type="text" name="firstName" required/></label>
-    <label>Last Name<input type="text" name="lastName" required/></label>
-    <label>Email<input type="email" name="email" required/></label>
-    <label>Password<input type="password" name="password" required/></label>
-    <button type="submit">Signup</button>
-</form>
-<p>Already have an account? <span><a href="/login">Login here</a></span></p>
+<div class="outsidepage authpages">
+    <h1>Signup</h1>
+    <form action="/signup" method="POST">
+        <div class="inputblock ">
+            <label>First Name<input type="text" name="firstName" required/></label>
+        </div>
+        <div class="inputblock ">
+            <label>Last Name<input type="text" name="lastName" required/></label>
+        </div>
+        <div class="inputblock ">
+            <label>Email<input type="email" name="email" required/></label>
+        </div>
+        <div class="inputblock ">
+            <label>Password<input type="password" name="password" required/></label>
+        </div>
+        <button class="button login no-border" type="submit">Signup</button>
+    </form>
+    <p class="smalltext">Already have an account? <span><a class="signuplink" href="/login">Login here</a></span></p>
 
-<% if (typeof errorMessage !== "undefined") { %>
-    <p><%= errorMessage  %> </p>
-   <% } %>
+    <% if (typeof errorMessage !== "undefined") { %>
+        <p><%= errorMessage  %> </p>
+    <% } %>
+</div>

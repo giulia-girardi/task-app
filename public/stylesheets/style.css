@@ -83,7 +83,6 @@ input {
   border-radius: 5px;
   height: 1.6rem;
   padding: 3%;
-  margin: 3%;
   background-color: eee5e9;
   border: none;
 }
@@ -101,7 +100,7 @@ label {
 }
 .no-border{
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #2e4057;
 }
 nav {
