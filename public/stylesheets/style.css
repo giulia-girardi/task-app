@@ -103,6 +103,10 @@ label {
 .smalltext {
   padding: 3%;
   font-size: 0.8rem;
+  text-align: center;
+}
+.loginfix {
+  padding: 3% !important;
 }
 .signuplink {
   color: #2f2d2e;
@@ -271,7 +275,7 @@ font-weight: bolder;
   width: 50%;
 }
 form  { 
-  display: table;      
+  display: table;  
 }
 form > p  { 
   display: table-row;  
