@@ -237,7 +237,7 @@ font-weight: bolder;
 
 
 .complete-btn {
-  background-image: url('/images/unchecked-checkbox.png');
+  background-image: url('/images/checkbox-unchecked.png');
   background-size: cover;
   width: 30px;
   height: 30px;
