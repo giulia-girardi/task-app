@@ -5,12 +5,32 @@
             <h2>Create Task</h2>
         </div>
         <div class="tabpage">
-        <form action="/tasks/create" method="POST">
-            <label>Task name:<input type="text" name="taskName" required/></label>
-            <label>Due date:<input type="date" name="dueDate" required/></label>
-            <label>Collaborators:<input type="text" name="collaborators"/></label>
-            <button class="no-border" id="createtaskbutton" type="submit">Create</button>
-        </form>
+        <div class="createformcontainer">
+            <form class="createform" action="/tasks/create" method="POST">
+                <p>
+                    <div class="wrapinputs">
+                        <label>Task name:</label>
+                        <input type="text" name="taskName" required/>
+                    </div>
+                </p>
+                <p>
+                    <div class="wrapinputs">
+                        <label>Due date:</label>
+                        <input type="date" name="dueDate" required/>
+                     </div>
+                </p>
+                <p>
+                    <div class="wrapinputs">
+                        <label>Collaborators:</label>
+                        <input type="text" name="collaborators"/>
+                    </div>
+                </p>
+                
+                <button class="no-border" id="createtaskbutton" type="submit">Create</button>
+            </form>
+        </div>
+        
+
 
         <% if (typeof errorMessage !== "undefined") { %>
             <p><%= errorMessage  %> </p>

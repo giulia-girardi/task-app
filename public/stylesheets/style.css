@@ -112,6 +112,8 @@ label {
   font-size: 1.1rem;
   color: #2e4057;
   letter-spacing: 1px;
+  padding: 5%;
+  height: 35px;
 }
 nav {
   background-color: #cf5c36;
@@ -268,6 +270,28 @@ font-weight: bolder;
 .rightcolumn {
   width: 50%;
 }
+form  { 
+  display: table;      
+}
+form > p  { 
+  display: table-row;  
+  height: 40px;
+}
+
+label { 
+  display: table-cell; 
+  margin: 3% ;
+}
+input { 
+  display: table-cell; 
+  width: 300px;
+  margin: 3% 0 ;
+}
+.createformcontainer {
+  display: flex;
+  align-items: flex-start;
+  height: fit-content;
+}
 
 @media (max-width: 768px) {
   .button-container {
@@ -292,5 +316,9 @@ font-weight: bolder;
   }
   .menuitem {
     display: block;
+  }
+  .wrapinputs {
+    display: flex;
+    flex-wrap: wrap
   }
 }
