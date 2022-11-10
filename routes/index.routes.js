@@ -19,7 +19,8 @@ router.get("/dashboard", isLoggedIn, async (req, res, next) => {
   const tasksDueToday = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {dueDate: {$eq: todayNewFormat}}, {taskCompleted: false}]})
 
   const userWithSharedTask = await User.find({$and: [ {email: req.session.user.email}, {sharedTasks: {$ne: []}}]}).populate('sharedTasks')
-  const sharedTasksPopulated = userWithSharedTask[0].sharedTasks
+  const sharedTasksPopulated = userWithSharedTask[0].sharedTasks || []
+
 
   // only have tasks still to be done
   const sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
