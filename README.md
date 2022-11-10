@@ -127,4 +127,4 @@ taskOwner: ObjectId<User>
 
 The url to your presentation slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://docs.google.com/presentation/d/1crKdOYcdbmSmpUlw1F0wB_f-A4sy215bUCs7-L6hTSE/edit#slide=id.g187968916aa_0_0)
