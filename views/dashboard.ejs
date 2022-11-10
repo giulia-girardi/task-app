@@ -10,21 +10,25 @@
             <div class="task inlinecheck">
                 <div>
                     <% tasksDueToday.forEach(task => { %>
-                        <p class="task-name"><%= task.taskName %> </p>
-                        <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                        <div class="dashboard-task">
+                             <form action="/dashboard/<%= task.id  %>/done" method="POST">
                             <button class="complete-btn" type="submit" name="taskCompleted"></button>
-                        </form>
+                            </form>
+                            <p class="dashboard-task-name"><%= task.taskName %> </p>
+                        </div>
                     <% }) %>
                 </div>
                 <div>
                     <% sharedTasksDue.forEach(task => { %>
-                        <p class="task-name"><%= task.taskName %> </p>
-                            <form action="/dashboard/<%= task.id  %>/done" method="POST">
-                                <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                        <div class="dashboard-task">
+                             <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                            <button class="complete-btn" type="submit" name="taskCompleted"></button>
                             </form>
+                            <p class="dashboard-task-name"><%= task.taskName %> </p>
+                        </div>
                         <% }) %>
                 </div>
-                <div>
+                <div class="alltasks">
                     <a class="viewalllink" href="/tasks">View all tasks</a>
                 </div>
             </div>
