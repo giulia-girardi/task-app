@@ -3,35 +3,29 @@
     <div class="pagecontent">
         <div class="tabtitle">
             <h2>Dashboard</h2>
+            <a href="/tasks/create" id="createtaskbutton">Create a task</a>
         </div>
         <div class="tabpage">
-            <div class="twocolumnscontainer">
-                <div class="leftcolumn">
-                    <h2>Tasks due today:</h2>
-                    <div class="task inlinecheck">
-                        <div>
-                            <% tasksDueToday.forEach(task => { %>
-                                <p class="task-name"><%= task.taskName %> </p>
-                                <form action="/dashboard/<%= task.id  %>/done" method="POST">
-                                    <button class="complete-btn" type="submit" name="taskCompleted"></button>
-                                </form>
-                            <% }) %>
-                        </div>
-                        <div>
-                            <% sharedTasksDue.forEach(task => { %>
-                                <p class="task-name"><%= task.taskName %> </p>
-                                    <form action="/dashboard/<%= task.id  %>/done" method="POST">
-                                        <button class="complete-btn" type="submit" name="taskCompleted"></button>
-                                    </form>
-                                <% }) %>
-                        </div>
-                        <div>
-                            <a href="/tasks">View all tasks</a>
-                        </div>
-                    </div>
+                <h2>Tasks due today:</h2>
+            <div class="task inlinecheck">
+                <div>
+                    <% tasksDueToday.forEach(task => { %>
+                        <p class="task-name"><%= task.taskName %> </p>
+                        <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                            <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                        </form>
+                    <% }) %>
                 </div>
-                <div class="rightcolumn">
-                    <a class="button" id="createtaskbutton" href="/tasks/create">Create a task</a>
+                <div>
+                    <% sharedTasksDue.forEach(task => { %>
+                        <p class="task-name"><%= task.taskName %> </p>
+                            <form action="/dashboard/<%= task.id  %>/done" method="POST">
+                                <button class="complete-btn" type="submit" name="taskCompleted"></button>
+                            </form>
+                        <% }) %>
+                </div>
+                <div>
+                    <a class="viewalllink" href="/tasks">View all tasks</a>
                 </div>
             </div>
         </div>

@@ -263,17 +263,8 @@ font-weight: bolder;
   height: 30px;
   border-style: none;
 }
-.twocolumnscontainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-.leftcolumn {
-  width: 50%;
-}
-.rightcolumn {
-  width: 50%;
-}
+
+
 form  { 
   display: table;  
 }
@@ -294,6 +285,13 @@ input {
 }
 .collab-list {
   list-style: none;
+}
+.viewalllink {
+  color: #2e4057;
+  font-weight: 600;
+}
+.dashboard-button-fix {
+  padding: 3% !important;
 }
 
 @media (max-width: 768px) {
