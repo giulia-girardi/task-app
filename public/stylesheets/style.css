@@ -99,6 +99,19 @@ input {
   background-color: eee5e9;
   border: none;
 }
+input[type=date]::-webkit-calendar-picker-indicator,
+input[type=time]::-webkit-calendar-picker-indicator {
+    background: none;
+    bottom    : 0;
+    color     : transparent;
+    cursor    : pointer;
+    height    : auto;
+    left      : 0;
+    position  : absolute;
+    right     : 0;
+    top       : 0;
+    width     : auto;
+}
 label {
   color: #2f2d2e;
   font-size: 1.2rem;
