@@ -286,11 +286,10 @@ input {
   display: table-cell; 
   width: 300px;
   margin: 3% 0 ;
+  height: 35px;
 }
-.createformcontainer {
-  display: flex;
-  align-items: flex-start;
-  height: fit-content;
+.collab-list {
+  list-style: none;
 }
 
 @media (max-width: 768px) {
