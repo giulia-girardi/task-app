@@ -8,7 +8,7 @@ const User = require("../models/User.model");
 router.get("/", isLoggedIn, async (req, res, next) => {
     const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
     const userWithSharedTask = await User.find({$and: [ {email: req.session.user.email}, {sharedTasks: {$ne: []}}]}).populate('sharedTasks')
-    const sharedTasksPopulated = userWithSharedTask[0].sharedTasks
+    const sharedTasksPopulated = userWithSharedTask.length ? userWithSharedTask[0].sharedTasks : []
 
     // only have tasks still to be done
     const sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
