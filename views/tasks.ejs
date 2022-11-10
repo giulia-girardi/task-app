@@ -6,7 +6,7 @@
             <a href="/tasks/create" id="createtaskbutton">Create a task</a>
         </div>
         <div class="tabpage">
-            <h3>Your tasks</h3>
+            <h4>Your tasks</h4>
             <% allDueTasks.forEach(task => { %>
                 <div class="task">
                     <div class="task-edit-delete">
@@ -28,7 +28,7 @@
                 </div>
             <% }) %>
 
-            <h3>Tasks shared with you</h3>
+            <h4>Tasks shared with you</h4>
             <% sharedTasksDue.forEach(task => { %>
                 <div class="task">
                     <div class="task-edit-delete">

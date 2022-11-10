@@ -5,7 +5,7 @@
             <h2>Completed Tasks</h2>
         </div>
         <div class="tabpage">
-        <h3>Your Completed Tasks</h3>
+        <h4>Your Completed Tasks</h4>
         <% pastTasks.forEach(task => { %>
             <div class="task">
                 <p class="task-name"><%= task.taskName  %> </p>    
@@ -14,7 +14,7 @@
         <% }) %>
 
 
-        <h3>Shared Completed Tasks</h3>
+        <h4>Shared Completed Tasks</h4>
         <% sharedTasksDone.forEach(task => { %>
             <div class="task">
                 <p class="task-name"><%= task.taskName  %> </p>    

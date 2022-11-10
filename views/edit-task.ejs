@@ -5,34 +5,35 @@
             <h2>Edit Task</h2>
         </div>
         <div class="tabpage">
-            <form action="<%= `/tasks/${oneTask.id}/edit` %>" method="POST">
-                <p>
+            <form cellspacing="0" action="<%= `/tasks/${oneTask.id}/edit` %>" method="POST">
+
                     <div class="wrapinputs">
                         <label>Task name:</label>
                         <input type="text" name="taskName" value="<%= oneTask.taskName  %>" required/>
                     </div>
-                </p>
-                <p>
-                    <div class="wrapinputs">
+
+                    <div class="wrapinputs ">
                         <label>Due date:</label>
                         <input type="date" name="dueDate" value="<%= oneTask.dueDate.toISOString().slice(0,10) %>" required/>
                     </div>
-                </p>
-                <p>Current collaborators: 
-                    <ul>
-                        <div >
-                            <% oneTask.collaborators.forEach(collaborator => { %>
-                                <li class="collab-list"><%= collaborator  %> </li>
-                            <% }) %>
-                        </div>
-                    </ul>
-                </p>
-                <p>    
+                    <div class="padding">
+                        <p >Current collaborators: 
+                            <ul>
+                                <div >
+                                    <% oneTask.collaborators.forEach(collaborator => { %>
+                                        <li class="collab-list"><%= collaborator  %> </li>
+                                    <% }) %>
+                                </div>
+                            </ul>
+                        </p>
+                    </div>
+ 
+            
                     <div class="wrapinputs">        
                         <label>New collaborator(s):</label>
                         <input type="text" name="collaborators"  %>"/>
                     </div>
-                </p>
+                
             <button class="no-border" id="createtaskbutton" type="submit">Send</button>
         </form>
             

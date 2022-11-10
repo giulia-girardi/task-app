@@ -6,24 +6,20 @@
         </div>
         <div class="tabpage">
         <form action="/tasks/create" method="POST">
-            <p>
+
                 <div class="wrapinputs">
                     <label>Task name:</label>
                     <input type="text" name="taskName" required/>
                 </div>
-            </p>
-            <p>
+
                 <div class="wrapinputs">
                     <label>Due date:</label>
                     <input type="date" name="dueDate" required/>
-                 </div>
-            </p>
-            <p>
+                </div>
                 <div class="wrapinputs">
                     <label>Collaborators:</label>
                     <input type="text" name="collaborators"/>
                 </div>
-            </p>
             
             <button class="no-border" id="createtaskbutton" type="submit">Create</button>
         </form>
