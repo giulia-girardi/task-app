@@ -13,16 +13,22 @@ router.get("/", (req, res, next) => {
 /* GET Dashboard page */
 router.get("/dashboard", isLoggedIn, async (req, res, next) => {
   const today = new Date();
+  console.log('Today: ', today);
+  console.log('Typeof today: ', typeof today);
   const todayToString = today.toISOString().slice(0,10)
+  console.log('today to string: ', todayToString);
   const todayNewFormat = todayToString + "T00:00:00.000+00:00"
 
   const tasksDueToday = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {dueDate: {$eq: todayNewFormat}}, {taskCompleted: false}]})
 
   const userWithSharedTask = await User.find({$and: [ {email: req.session.user.email}, {sharedTasks: {$ne: []}}]}).populate('sharedTasks')
   const sharedTasksPopulated = userWithSharedTask[0].sharedTasks
+  console.log('shared tasks: ', sharedTasksPopulated)
 
   // only have tasks still to be done
-  const sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
+  const todayFormatCollaboratorString = todayToString + 'T00:00:00.000Z';
+  const sharedTasksDueFalse = sharedTasksPopulated.filter(task => task.taskCompleted == false);
+  const sharedTasksDue = sharedTasksDueFalse.filter(task => task.dueDate.toISOString() == todayFormatCollaboratorString);
 
   res.render("dashboard", {tasksDueToday, sharedTasksDue});
 });
