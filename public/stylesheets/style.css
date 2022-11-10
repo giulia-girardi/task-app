@@ -301,13 +301,14 @@ input {
     bottom: 0;
     width: 100vw;
     max-width: 100vh;
-    font-size: 8px;
-    height: auto;
+    font-size: 10px;
+    height: 45px;
+    padding-top: 1%;
   }
   nav ul {
     flex-direction: row;
     width: 100vw;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
   .menuitems {
     display: flex;
