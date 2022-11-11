@@ -6,10 +6,12 @@ const User = require("../models/User.model");
 
 /* GET Tasks page */
 router.get("/", isLoggedIn, async (req, res, next) => {
+    /// Find tasks to be completed still
     const allDueTasks = await TaskModel.find({$and: [{taskOwner: req.session.user._id}, {taskCompleted: false}]})
+    /// Find the array of current user with shared tasks id (if any) and populate them
     const userWithSharedTask = await User.find({$and: [ {email: req.session.user.email}, {sharedTasks: {$ne: []}}]}).populate('sharedTasks')
+    /// Get array of populated shared tasks (if none, empty array)
     const sharedTasksPopulated = userWithSharedTask.length ? userWithSharedTask[0].sharedTasks : []
-
     // only have tasks still to be done
     const sharedTasksDue = sharedTasksPopulated.filter(task => task.taskCompleted == false)
 
@@ -35,19 +37,20 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 router.post("/create", isLoggedIn, async (req, res, next) => {
   try {
 
-    //Check if there is a collaborator added:
+    //Transform string of input email as an array
     let collaboratorsArray = req.body.collaborators.split(", ");
-    console.log(collaboratorsArray[0].length);
+    
+    //If no collaborator is added, create task
     if (collaboratorsArray[0].length === 0) {
       const createdTask = await TaskModel.create({
         taskName: req.body.taskName,
         dueDate: req.body.dueDate,
         taskOwner: req.session.user._id,   
       }); 
-      console.log("hello");
       res.redirect("/tasks");
     } else {
-      //Check if added collaborators are valid users:
+      
+      //If collaborators are added, check if added collaborators are valid users, error if not and create task if yes
       const arrayOfPromises = [];
       let userNotFound = false;
 
@@ -76,7 +79,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
           collaborators: checkedCollaborators,
           taskOwner: req.session.user._id,
         });
-  
+
+        // add shared task to the colaborators user model
         try {
           await collaboratorsArray.forEach(async (collaborator) => {
             await User.findOneAndUpdate(
@@ -84,6 +88,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
               { $push: { sharedTasks: createdTask._id } }
             );
           });
+          
+          // add  task to the owner's user model
           await User.findByIdAndUpdate(req.session.user._id, {
             $push: { tasks: createdTask._id },
           });
@@ -94,7 +100,6 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
       }  
     }
   } catch (error) {
-    console.log("errrororor")
     res.render("create-task", { errorMessage: error });
   }
 });
@@ -108,8 +113,10 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
 /* POST Edit Task page */
 router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
   try {
+    //Transform string of input email as an array
     let collaboratorsArray = req.body.collaborators.split(", ");
 
+    //If no collaborator is added, create task
     if (!collaboratorsArray[0]) {
       const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
         taskName: req.body.taskName,
@@ -117,23 +124,24 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
       });
       res.redirect("/tasks");
     } else if (collaboratorsArray.length > 0) {
+
+      //If collaborators are added, check if added collaborators are valid users, ... 
       let validCollaborators = [];
       let userNotFound = false;
       let duplicateCollaborator = false;
       const arrayOfPromises = [];
+
       collaboratorsArray.forEach((collab) => {
         arrayOfPromises.push(User.findOne({ email: collab }));
       });
       const arrayOfResponse = await Promise.all(arrayOfPromises);
-      //console.log('array responses:', arrayOfResponse);
       const currentTask = await TaskModel.findById(req.params.id);
 
       arrayOfResponse.forEach((collaborator) => {
         if (!collaborator) {
           userNotFound = true;
-          //console.log('2. userNotFound inside forEach: ', userNotFound);
         } else if (collaborator) {
-          //console.log('check existing collab: ', checkExistingCollaborator._conditions.collaborators);
+          //...and check that the added collaborator is not a collabor already
           if (!currentTask.collaborators.includes(collaborator.email)) {
             validCollaborators.push(collaborator);
           } else {
@@ -141,11 +149,9 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
           }
         }
       });
-      //console.log('Array of Response: ', arrayOfResponse);
 
-      //console.log('3. UserNotFound outside forEach: ', userNotFound);
+      /// if so error
       if (userNotFound) {
-        //console.log('UserNotFound outside forEach: ', userNotFound);
         const oneTask = await TaskModel.findById(req.params.id);
         res.render("edit-task", { errorMessage: "User not found", oneTask });
       } else if (duplicateCollaborator) {
@@ -155,13 +161,11 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
           oneTask,
         });
       } else if (!userNotFound) {
-        //console.log('If/else at the end: validCollaborators Array: ', validCollaborators);
         const collaboratorsEmails = validCollaborators.map(
           (collaborator) => collaborator.email
         );
-        //console.log('Mapped emails: ', collaboratorsEmails);
 
-        //Edit the task with the entered values from the form:
+        //If not, edit the task with the entered values from the form:
         const updateTask = await TaskModel.findByIdAndUpdate(req.params.id, {
           taskName: req.body.taskName,
           dueDate: req.body.dueDate,
@@ -189,13 +193,14 @@ router.post("/:id/delete", isLoggedIn, async (req, res, next) => {
   try {
     //check if task id is still in tasks property of user and delete it:
     const taskIdInTasksProperty = await User.findByIdAndUpdate(req.session.user._id, {$pull: {tasks: {$in: [req.params.id]  } } } )
-    console.log('find the taskId: ', taskIdInTasksProperty);
+    
     //check if task id is in sharedTasks property of the collaborators and delete it:
     const getTask = await TaskModel.findById(req.params.id);
     const listOfCollaborators = getTask.collaborators;
     listOfCollaborators.forEach(async (collaborator) => {
-      await User.findOneAndUpdate({email: collaborator}, {$pull: {sharedTasks: {$in: [req.params.id]  } } })
+    await User.findOneAndUpdate({email: collaborator}, {$pull: {sharedTasks: {$in: [req.params.id]  } } })
     })
+    
     //find task and delete it:
     await TaskModel.findByIdAndDelete(req.params.id);
     res.redirect("/tasks");
