@@ -64,33 +64,25 @@ Tasks:
 
 - GET /dashboard
   - renders the tasks due today (own and shared)
-- POST /dashboard
+- POST /dashboard:id/done
   - redirects to /dashboard when task is marked as completed
 - GET /past-tasks
   - renders past tasks (own and shared)
 
 - GET /tasks
   - renders the list of all tasks to be completed (own and shared)
-- POST /tasks
-  - 
-
-
-<!-- 
-- POST /events/create 
-  - redirects to / if user is anonymous
-  - body: 
-    - name
-    - date
-    - location
-    - description
-- GET /events/:id
-  - renders the event detail page
-  - includes the list of attendees
-  - attend button if user not attending yet
-- POST /events/:id/attend 
-  - redirects to / if user is anonymous
-  - body: (empty - the user is already stored in the session) -->
-
+- POST /tasks:id/done
+  - redirects to /tasks when task is marked as completed
+- GET /create
+  - renders form to create task
+- POST /create
+  - redirects to /tasks when task is created
+- GET /:id/edit
+  - renders form to edit task
+- POST /:id/edit
+  - redirects to /tasks when task is edited
+- POST /:id/delete
+  - redirects to /tasks when task is deleted
 
 ## Models
 
