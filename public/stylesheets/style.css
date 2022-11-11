@@ -105,7 +105,9 @@ input {
   background-color: eee5e9;
   border: none;
 }
-
+#margin {
+  margin: 5% !important;
+}
 label {
   color: #2f2d2e;
   font-size: 1.2rem;
@@ -301,7 +303,8 @@ input {
 }
 
 .alltasks {
-  margin-top: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 .viewalllink {
   color: #2f2d2e;
@@ -325,6 +328,7 @@ input {
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  margin: 3% 0;
 }
 
 .dashboard-task-name {
